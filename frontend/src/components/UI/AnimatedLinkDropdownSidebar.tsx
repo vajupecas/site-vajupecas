@@ -59,7 +59,7 @@ export function AnimatedLinkDropdownSidebar({
                 <AnimatedLink
                   color={colorDropdown}
                   content={obj.name}
-                  to={`catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}`}
+                  to={`/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}`}
                   adicionalStyle="w-fit"
                 />
               </motion.li>
