@@ -9,7 +9,7 @@ import Counter from "../../../components/UI/Counter";
 import { motion } from "framer-motion";
 
 export default function AboutUsPage() {
-  const { findText, loadingTexts } = useTexts();
+  const { loadingTexts } = useTexts();
   const year = new Date().getFullYear();
 
   return (
