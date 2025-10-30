@@ -9,16 +9,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-SSL_CA_PATH = os.getenv("SSL_CA_PATH")
-
-ssl_context = None
-if SSL_CA_PATH:
-    ssl_context = ssl.create_default_context(cafile=SSL_CA_PATH)
+ssl_context = ssl.create_default_context()
 
 engine = create_async_engine(
     DATABASE_URL,
+    connect_args={"ssl": ssl_context},
     echo=True,
-    connect_args={"ssl": ssl_context} if ssl_context else {},
     pool_size=20,
     max_overflow=10
 )
