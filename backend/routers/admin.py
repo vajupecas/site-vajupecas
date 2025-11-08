@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Annotated
-from pydantic import EmailStr 
-from sqlmodel import Session, select
+from pydantic import EmailStr
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import select
 from random import randint
 import secrets
 from database.db import get_session
@@ -13,7 +14,7 @@ from utils.email import send_email
 
 router = APIRouter()
 
-def create_password_reset(session: Session, admin: Admin, expire_minutes: int = 15) -> str:
+async def create_password_reset(session: AsyncSession, admin: Admin, expire_minutes: int = 15) -> str:
     code = secrets.token_urlsafe(6)
     
     code_hash = hash_password_code(code)
@@ -23,13 +24,13 @@ def create_password_reset(session: Session, admin: Admin, expire_minutes: int = 
     admin.reset_expires_at = expires_at.replace(tzinfo=None)
 
     session.add(admin)
-    session.commit()
-    session.refresh(admin)
+    await session.commit()
+    await session.refresh(admin)
     
     return code
 
 
-def verify_password_reset(session: Session, admin: Admin, code: str) -> bool:
+async def verify_password_reset(session: AsyncSession, admin: Admin, code: str) -> bool:
     if (
         admin.reset_code 
         and admin.reset_expires_at 
@@ -38,20 +39,21 @@ def verify_password_reset(session: Session, admin: Admin, code: str) -> bool:
     ):
         admin.reset_code = None
         admin.reset_expires_at = None
-        session.commit()
+        await session.commit()
         return True
 
     raise HTTPException(status_code=401, detail="Senha incorreta")
 
 @router.get("/admin/me")
-def get_current_admin(admin_id: Annotated[int, Depends(verify_token)]):
+async def get_current_admin(admin_id: Annotated[int, Depends(verify_token)]):
     return admin_id
 
 @router.get("/admin/email")
-async def get_admin_by_email(admin_email: Annotated[str, Query(...)], session: Annotated[Session, Depends(get_session)]):
+async def get_admin_by_email(admin_email: Annotated[str, Query(...)], session: Annotated[AsyncSession, Depends(get_session)]):
     statement = select(Admin).where(Admin.email == admin_email)
 
-    admin = session.exec(statement=statement).first()
+    result = await session.execute(statement)
+    admin = result.scalars().first()
 
     if not admin:
         raise HTTPException(status_code=404, detail="Email incorreto")
@@ -59,13 +61,13 @@ async def get_admin_by_email(admin_email: Annotated[str, Query(...)], session: A
     return {"id": admin.id}
 
 @router.put("/admin/change-password-code")
-async def admin_change_password_code(data: AdminPasswordRequest, session: Annotated[Session, Depends(get_session)]):
-    admin = session.get(Admin, data.id)
+async def admin_change_password_code(data: AdminPasswordRequest, session: Annotated[AsyncSession, Depends(get_session)]):
+    admin = await session.get(Admin, data.id)
 
     if not admin:
         raise HTTPException(status_code=404, detail="Email incorreto")
 
-    change_password_code = create_password_reset(session=session, admin=admin)
+    change_password_code = await create_password_reset(session=session, admin=admin)
 
     subject = "Pedido de Troca de Senha"
     body_plain = f"""Recebemos um pedido de troca de senha para sua conta.
@@ -98,21 +100,21 @@ Se não foi você que fez esse pedido, entre em contato com o suporte imediatame
     return {"message": "Email enviado com sucesso!"}
 
 @router.put("/admin/verify-change-password")
-async def admin_verify_change_password_code(data: AdminVerifyCode, session: Annotated[Session, Depends(get_session)]):
-    admin = session.get(Admin, data.id)
+async def admin_verify_change_password_code(data: AdminVerifyCode, session: Annotated[AsyncSession, Depends(get_session)]):
+    admin = await session.get(Admin, data.id)
 
-    verification = verify_password_reset(session=session, admin=admin, code=data.code)
+    verification = await verify_password_reset(session=session, admin=admin, code=data.code)
 
     return verification
 
 @router.put("/admin/change-password")
-async def admin_change_password(data: AdminNewPassword, session: Annotated[Session, Depends(get_session)]):
-    admin = session.get(Admin, data.id)
+async def admin_change_password(data: AdminNewPassword, session: Annotated[ AsyncSession,Depends(get_session)]):
+    admin = await session.get(Admin, data.id)
 
     admin.hashed_password = hash_password(data.new_password)
     admin.reset_code = None
     admin.reset_expires_at = None
     session.add(admin)
-    session.commit()
+    await session.commit()
 
     return {"message": "Senha alterada com sucesso!"}

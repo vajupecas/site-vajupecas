@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func
 from sqlalchemy.orm import selectinload
 from database.db import get_session
+from models.product_model import ProductModel
 from models.product_type import ProductType, ProductTypeBase, ProductTypeResponse, ProductTypeUpdate
 from models.producer import Producer, ProducerResponse
 
@@ -12,7 +13,7 @@ router = APIRouter()
 
 @router.get("/product-types", response_model=List[ProductTypeResponse])
 async def get_product_types(session: Annotated[AsyncSession, Depends(get_session)]):
-    statement = select(ProductType).options(selectinload(ProductType.producer_list))
+    statement = select(ProductType).options(selectinload(ProductType.producer_list), selectinload(ProductType.product_model_list), selectinload(ProductType.product_list))
     result = await session.execute(statement=statement)
     product_types = result.scalars().all()
 
@@ -23,7 +24,7 @@ async def get_product_type_by_id(product_type_id: int, session: Annotated[AsyncS
     product_type = await session.get(
         ProductType, 
         product_type_id, 
-        options=[selectinload(ProductType.producer_list)]
+        options=[selectinload(ProductType.producer_list), selectinload(ProductType.product_model_list), selectinload(ProductType.product_list)]
     )
 
     if not product_type:
@@ -38,7 +39,7 @@ async def get_producers_by_type(product_type: str, session: Annotated[AsyncSessi
             select(Producer)
             .options(
                 selectinload(Producer.products_list), 
-                selectinload(Producer.product_type)
+                selectinload(Producer.product_type),
             )
             .where(Producer.product_type_id == int(product_type))
         )
@@ -50,6 +51,33 @@ async def get_producers_by_type(product_type: str, session: Annotated[AsyncSessi
                 selectinload(Producer.product_type)
             )
             .join(Producer.product_type)
+            .where(func.lower(ProductType.name) == product_type.replace("-", " ").lower())
+        )
+    
+    result = await session.execute(statement)
+    producers = result.scalars().all()
+    
+    return producers
+
+@router.get("/product-types/{product_type}/product-models", response_model=list[ProducerResponse])
+async def get_product_models_by_type(product_type: str, session: Annotated[AsyncSession, Depends(get_session)]):
+    if product_type.isdigit():
+        statement = (
+            select(Producer)
+            .options(
+                selectinload(Producer.products_list), 
+                selectinload(Producer.product_type)
+            )
+            .where(Producer.product_type_id == int(product_type))
+        )
+    else:
+        statement = (
+            select(ProductModel)
+            .options(
+                selectinload(ProductModel.products_list),
+                selectinload(ProductModel.product_type)
+            )
+            .join(ProductModel.product_type)
             .where(func.lower(ProductType.name) == product_type.replace("-", " ").lower())
         )
     

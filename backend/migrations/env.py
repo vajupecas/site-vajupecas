@@ -7,7 +7,7 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 
 from sqlmodel import SQLModel
-import models
+import ssl
 
 # Códigos para rodar a revisão:
 # alembic revision --autogenerate -m "" 
@@ -70,6 +70,7 @@ def run_migrations_online() -> None:
         url=DATABASE_URL,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        connect_args={"ssl": {"ca": ssl.get_default_verify_paths().cafile}}
     )
 
     with connectable.connect() as connection:

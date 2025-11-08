@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from typing import Annotated, List
 from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,7 +19,7 @@ async def get_clients(session: Annotated[AsyncSession, Depends(get_session)]):
     return clients
 
 @router.post("/clients", response_model=Client)
-async def post_client(data: ClientBase, session: Annotated[AsyncSession, Depends(get_session)]):
+async def post_client(data: ClientBase, session: Annotated[AsyncSession, Depends(get_session)], background_tasks: BackgroundTasks):
     client = Client.model_validate(data)
 
     subject = "Contato VajuPeças"
@@ -31,14 +31,13 @@ Nome: {client.name}
 E-mail: {client.email}
 Telefone: {client.number}
 
-Este e‑mail foi enviado automaticamente pelo formulário de contato da VajuPeças.
+Este e-mail foi enviado automaticamente pelo formulário de contato da VajuPeças.
 """
     
     body_html = f"""
 <html lang="pt-BR">
   <head>
     <style>
-      /* Algumas regras podem ser ignoradas por alguns clientes de e-mail; mantenha também estilos inline */
       body {{ background-color: #f4f4f5; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; }}
       img {{ border: 0; outline: none; text-decoration: none; display: block; }}
       a {{ color: inherit; text-decoration: none; }}
@@ -61,10 +60,10 @@ Este e‑mail foi enviado automaticamente pelo formulário de contato da VajuPe�
               <tr>
                 <td style="vertical-align:middle;">
                   <!-- Logo: substituir src pelo caminho do logo -->
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5IyB4b6MqeD3mRMPGkLtZSDj55IwEIo6kQ&s" alt="VajuPeças" width="180" style="display:block;">
+                  <img src="https://i.ibb.co/bRjNkkxs/foto-logo-vajupecas.png" alt="VajuPeças" width="150" style="display:block;">
                 </td>
-                <td style="text-align:right; color:#ffffff; font-family:Helvetica, Arial, sans-serif; font-size:16px;">
-                  <div style="font-weight:600">VajuPeças</div>
+                <td style="text-align:right; color:#ffffff; font-family:Helvetica, Arial, sans-serif; font-size:20px;">
+                  <div style="font-weight:700">VajuPeças</div>
                 </td>
               </tr>
             </table>
@@ -125,13 +124,20 @@ Este e‑mail foi enviado automaticamente pelo formulário de contato da VajuPe�
 """
 
     try:
-        send_email(client.email, subject, body_html, body_plain)
+        session.add(client)
+        await session.commit()
+        await session.refresh(client)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao enviar email: {str(e)}")
-
-    session.add(client)
-    await session.commit()
-    await session.refresh(client)
+        await session.rollback()
+        raise HTTPException(status_code=500, detail=f"Erro ao salvar cliente: {str(e)}")
+    
+    background_tasks.add_task(
+        send_email, 
+        client.email, 
+        subject, 
+        body_html, 
+        body_plain
+    )
 
     return client
 

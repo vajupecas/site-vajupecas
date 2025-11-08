@@ -5,7 +5,6 @@ class Settings(BaseSettings):
     ALGORITHM: str
     DATABASE_URL: str
     SYNC_DATABASE_URL: str
-    SSL_CA_PATH: str
     EMAIL_HOST: str
     EMAIL_PORT: int
     EMAIL_USER: str

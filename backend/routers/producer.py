@@ -33,7 +33,7 @@ async def get_producer_by_id(producer_id: int, session: Annotated[AsyncSession, 
 
     return producer
 
-@router.post("/producers", response_model=ProducerResponse)
+@router.post("/producers", response_model=ProducerBase)
 async def post_producer(data: ProducerBase, session: Annotated[AsyncSession, Depends(get_session)]) -> Producer:
     producer = Producer.model_validate(data)
 
