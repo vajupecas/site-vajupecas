@@ -11,7 +11,7 @@ export const postClient = async (data: ClientBaseDTO): Promise<Client> => {
   return response.data;
 };
 
-export const deleteClients = async (clientId: number): Promise<{ detail: string }> => {
+export const deleteClient = async (clientId: number): Promise<{ detail: string }> => {
   const response = await API.delete(`clients/${clientId}`);
   return response.data;
 };

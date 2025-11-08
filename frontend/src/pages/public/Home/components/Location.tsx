@@ -7,12 +7,12 @@ export default function LocationContainer() {
   return (
     <div className="w-7/8 md:w-4/6 h-fit flex flex-col gap-10 text-gray-800 justify-self-center overflow-hidden">
       <div>
-        <h3 className="text-center font-bold text-3xl md:text-4xl">Nossa Localização</h3>
+        <h3 className="text-center font-bold text-3xl 2xl:text-4xl">Nossa Localização</h3>
       </div>
       <div className="w-full flex flex-col gap-10 items-center justify-center justify-self-center">
         <div className="flex items-center gap-5">
           <PinIcon className="text-2xl fill-orange-500" />
-          <p className="text-sm md:text-xl">{findText("Localização")}</p>
+          <p className="text-sm md:text-lg 2xl:text-xl">{findText("Localização")}</p>
         </div>
         <div className="md:w-3/5 w-full h-[300px] md:h-[450px] flex justify-center rounded-2xl overflow-hidden">
           <iframe

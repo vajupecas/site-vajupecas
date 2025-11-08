@@ -51,13 +51,16 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
         <table className="w-full max-h-fit text-sm text-left rtl:text-right text-white0 outline-5">
           <thead className="text-xs text-gray-700 uppercase bg-gray-300  text-center">
             <tr>
-              <th scope="col" className="px-6 py-3 w-50 border-r-2 border-gray-400">
+              <th scope="col" className="px-6 py-3 w-40 border-r-2 border-gray-400">
                 Nome
               </th>
-              <th scope="col" className="px-6 py-3 w-50 border-r-2 border-gray-400">
+              <th scope="col" className="px-6 py-3 w-40 border-r-2 border-gray-400">
                 Fabricante
               </th>
-              <th scope="col" className="px-6 py-3 w-58 border-r-2 border-gray-400">
+              <th scope="col" className="px-6 py-3 w-40 border-r-2 border-gray-400">
+                Modelo
+              </th>
+              <th scope="col" className="px-6 py-3 w-54 border-r-2 border-gray-400">
                 Descrição
               </th>
               <th scope="col" className="px-6 py-3">
@@ -74,7 +77,12 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
                 <th scope="row" className="px-6 py-4  text-center font-medium text-gray-900 whitespace-nowrap border-r-2 border-gray-300">
                   {obj.name}
                 </th>
-                <td className="px-6 py-4  text-center text-gray-900 font-medium border-r-2 border-gray-300">{obj.producer.name}</td>
+                <td className="px-6 py-4  text-center text-gray-900 font-medium border-r-2 border-gray-300">
+                  {obj.producer_id ? obj.producer.name : "Não possui"}
+                </td>
+                <td className="px-6 py-4  text-center text-gray-900 font-medium border-r-2 border-gray-300">
+                  {obj.product_model_id ? obj.product_model.name : "Não possui"}
+                </td>
                 <td
                   className="cursor-pointer px-6 py-4 truncate text-center text-gray-900 font-medium border-r-2 border-gray-300"
                   title={obj.description}

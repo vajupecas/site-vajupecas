@@ -1,32 +1,32 @@
 import { useState } from "react";
-import type { ProductTypeResponseDTO } from "../../../../features/product_type/productType.model";
+import type { ProductModelResponseDTO } from "../../../../features/product_model/productModels.model";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-interface ProductTypesTableProps {
-  productTypes: ProductTypeResponseDTO[];
-  setProductTypeEdit: Function;
-  setEditProductTypeForm: Function;
-  setProductTypeRemove: Function;
-  setRemoveProductTypeForm: Function;
+interface ProductModelsTableProps {
+  productModels: ProductModelResponseDTO[];
+  setProductModelEdit: Function;
+  setEditProductModelForm: Function;
+  setProductModelRemove: Function;
+  setRemoveProductModelForm: Function;
 }
 
-export function ProductTypesTable({
-  productTypes,
-  setProductTypeEdit,
-  setEditProductTypeForm,
-  setProductTypeRemove,
-  setRemoveProductTypeForm,
-}: ProductTypesTableProps) {
+export default function ProductModelsTable({
+  productModels,
+  setProductModelEdit,
+  setEditProductModelForm,
+  setProductModelRemove,
+  setRemoveProductModelForm,
+}: ProductModelsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const maxButtons = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = (productTypes ?? []).slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil((productTypes ?? []).length / itemsPerPage);
+  const currentItems = productModels.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(productModels.length / itemsPerPage);
 
   const getVisiblePages = (currentPage: number, totalPages: number) => {
-    let start = Math.max(currentPage - 1, 1); // começa em 1
+    let start = Math.max(currentPage - 1, 1);
     let end = start + maxButtons - 1;
 
     if (end > totalPages) {
@@ -41,30 +41,27 @@ export function ProductTypesTable({
     return pages;
   };
 
-  function handleEditProductTypeForm(productType: ProductTypeResponseDTO) {
-    setProductTypeEdit(productType);
-    setEditProductTypeForm(true);
+  function handleEditProductModelForm(productModel: ProductModelResponseDTO) {
+    setProductModelEdit(productModel);
+    setEditProductModelForm(true);
   }
 
-  function handleRemoveProductType(productType: ProductTypeResponseDTO) {
-    setProductTypeRemove(productType);
-    setRemoveProductTypeForm(true);
+  function handleRemoveProductModelForm(productModel: ProductModelResponseDTO) {
+    setProductModelRemove(productModel);
+    setRemoveProductModelForm(true);
   }
 
   return (
     <>
       <div className="overflow-x-auto shadow-md rounded-lg mt-5">
-        <table className="w-full max-h-fit text-sm text-center text-white0 outline-5 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-300">
+        <table className="w-full max-h-fit text-sm text-left rtl:text-right text-white0 outline-5">
+          <thead className="text-xs text-center text-gray-700 uppercase bg-gray-300">
             <tr>
-              <th scope="col" className="px-4 py-3 w-60 border-r-2 border-gray-400">
+              <th scope="col" className="px-6 py-3 w-58 border-r-2 border-gray-400">
                 Nome
               </th>
-              <th scope="col" className="px-2 py-3 w-50 border-r-2 border-gray-400">
-                Tem Fabricante?
-              </th>
-              <th scope="col" className="px-2 py-3 w-50 border-r-2 border-gray-400">
-                Tem Modelos?
+              <th scope="col" className="px-6 py-3 w-58 border-r-2 border-gray-400">
+                Família
               </th>
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
@@ -76,25 +73,19 @@ export function ProductTypesTable({
           </thead>
           <tbody>
             {currentItems.map((obj) => (
-              <tr className="bg-gray-100 border-b border-gray-500 hover:bg-gray-50">
-                <th scope="row" className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap border-r-2 border-gray-300">
+              <tr id={`${obj.id}`} className="bg-gray-100 border-b  border-gray-500 hover:bg-gray-50 text-center">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border-r-2 border-gray-300">
                   {obj.name}
                 </th>
-                <td className="cursor-pointer px-6 py-4 text-center text-gray-900 font-medium border-r-2 border-gray-300">
-                  {obj.has_producer ? "Sim" : "Não"}
-                </td>
-                <td className="cursor-pointer px-6 py-4 text-center text-gray-900 font-medium border-r-2 border-gray-300">
-                  {obj.has_product_model ? "Sim" : "Não"}
-                </td>
-                <td className="px-6 py-4 font-medium text-right">
-                  <button onClick={() => handleEditProductTypeForm(obj)} type="button" className="cursor-pointer text-blue-600 hover:underline">
+                <td className="px-6 py-4 text-gray-700 font-medium border-r-2 border-gray-300">{obj.product_type.name}</td>
+                <td className="px-6 py-4 font-medium text-right ">
+                  <button onClick={() => handleEditProductModelForm(obj)} className="cursor-pointer text-blue-600 hover:underline">
                     Editar
                   </button>
                 </td>
                 <td className="px-6 py-4 font-medium text-right">
                   <button
-                    onClick={() => handleRemoveProductType(obj)}
-                    type="button"
+                    onClick={() => handleRemoveProductModelForm(obj)}
                     className="cursor-pointer rounded-lg bg-red-500 hover:bg-red-600 text-white px-4 py-2"
                   >
                     Remover

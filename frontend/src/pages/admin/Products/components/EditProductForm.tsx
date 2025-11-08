@@ -4,6 +4,8 @@ import { RotateCcw } from "lucide-react";
 import type { ProductResponseDTO } from "../../../../features/product/product.model";
 import { AnimatedButton } from "../../../../components/UI/AnimatedButton";
 import { AnimatedResetButton } from "../../../../components/UI/AnimatedResetButton";
+import type { ProductTypeSummaryDTO } from "../../../../features/product_type/productType.model";
+import type { ProductModelResponseDTO } from "../../../../features/product_model/productModels.model";
 
 interface EditProductFormProps {
   product: ProductResponseDTO | null;
@@ -11,6 +13,8 @@ interface EditProductFormProps {
   setEditProductForm: Function;
   setProductEdit: Function;
   producers: ProducerResponseDTO[];
+  productTypes: ProductTypeSummaryDTO[];
+  models: ProductModelResponseDTO[];
   refreshProducts: Function;
 }
 
@@ -20,11 +24,15 @@ export default function EditProductForm({
   setEditProductForm,
   setProductEdit,
   producers,
+  productTypes,
+  models,
   refreshProducts,
 }: EditProductFormProps) {
   const [productName, setProductName] = useState(product?.name);
   const [productDescription, setProductDescription] = useState(product?.description);
   const [productProducer, setProductProducer] = useState(String(product?.producer_id));
+  const [productModel, setProductModel] = useState(String(product?.product_model_id));
+  const [productProductType, setProductProductType] = useState<ProductTypeSummaryDTO | null>(product?.product_type ?? null);
   const [file, setFile] = useState<File | null>(null);
   const [enableEdit, setEnableEdit] = useState(false);
 
@@ -56,7 +64,7 @@ export default function EditProductForm({
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => cancelEditProduct()}></div>
-      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute mt-26 w-1/4 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute w-1/3 2xl:w-1/4 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">EDITAR PRODUTO</h3>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
@@ -93,19 +101,76 @@ export default function EditProductForm({
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="flex flex-row gap-1.5 items-center">
+              <p>Família</p>
+              <AnimatedResetButton
+                content={<RotateCcw size={14} color="black" />}
+                onClickFunction={() => setProductProductType(product?.product_type ?? null)}
+              />
+            </div>
+            <select
+              className="bg-gray-50 px-3 py-1.5 rounded-lg"
+              onChange={(e) => {
+                const selected = productTypes.find((obj) => obj.id === Number(e.target.value)) || null;
+                setProductProductType(selected);
+              }}
+              value={productProductType?.id ?? ""}
+            >
+              <option value="">- Selecionar -</option>
+              {productTypes.map((obj) => (
+                <option key={obj.id} value={obj.id}>
+                  {obj.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex flex-row gap-1.5 items-center">
               <p>Fabricante</p>
               <AnimatedResetButton
                 content={<RotateCcw size={14} color="black" />}
                 onClickFunction={() => setProductProducer(String(product?.producer_id))}
               />
             </div>
-            <select className="bg-gray-50 px-3 py-1.5 rounded-lg" onChange={(e) => setProductProducer(e.target.value)} value={productProducer}>
+            <select
+              disabled={!productProductType || !productProductType.has_producer}
+              className="bg-gray-50 px-3 py-1.5 rounded-lg disabled:bg-gray-100 disabled:text-gray-400"
+              onChange={(e) => setProductProducer(e.target.value)}
+              value={productProducer}
+            >
               <option value="" selected>
                 - Selecionar -
               </option>
-              {producers.map((obj) => (
-                <option value={`${obj.id}`}>{obj.name}</option>
-              ))}
+              (
+              {producers
+                .filter((obj) => obj.product_type_id == Number(productProductType?.id))
+                .map((obj) => (
+                  <option value={`${obj.id}`}>{obj.name}</option>
+                ))}
+              )
+            </select>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex flex-row gap-1.5 items-center">
+              <p>Modelo</p>
+              <AnimatedResetButton
+                content={<RotateCcw size={14} color="black" />}
+                onClickFunction={() => setProductProducer(String(product?.product_model_id))}
+              />
+            </div>
+            <select
+              disabled={!productProductType || !productProductType.has_product_model}
+              className="bg-gray-50 px-3 py-1.5 rounded-lg disabled:bg-gray-100 disabled:text-gray-400"
+              onChange={(e) => setProductModel(e.target.value)}
+              value={productModel}
+            >
+              <option value="" selected>
+                - Selecionar -
+              </option>
+              {models
+                .filter((obj) => obj.product_type_id == Number(productProductType?.id))
+                .map((obj) => (
+                  <option value={`${obj.id}`}>{obj.name}</option>
+                ))}
             </select>
           </div>
           <div className="flex flex-col gap-1.5">

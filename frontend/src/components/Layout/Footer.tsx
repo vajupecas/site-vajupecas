@@ -19,18 +19,20 @@ export function Footer() {
               <NavLink to={"/"} className="block w-fit">
                 <img src={SiteLogo} className="w-20 md:w-32" alt="" />
               </NavLink>
-              <span className="text-white text-center text-[10px] md:text-base font-semibold">Vaju Pecas de Bombas e Betoneiras Ltda</span>
+              <span className="text-white text-center text-[10px] md:text-xs 2xl:text-base font-semibold">
+                Vaju Pecas de Bombas e Betoneiras Ltda
+              </span>
             </div>
           </div>
           <div className="flex justify-center">
             <div className="flex flex-col gap-5 text-white">
-              <h5 className="text-xs md:text-2xl font-semibold">Entre em Contato</h5>
+              <h5 className="text-xs md:text-xl 2xl:text-2xl font-semibold">Entre em Contato</h5>
               <div className="flex flex-col gap-4 font-medium">
-                <p className="flex text-[10px] md:text-base gap-2 items-center">
+                <p className="flex text-[10px] md:text-xs 2xl:text-base gap-2 items-center">
                   <TelephoneIcon />
                   (048) 99206-7057
                 </p>
-                <p className="flex text-[10px] md:text-base gap-2 items-center">
+                <p className="flex text-[10px] md:text-xs 2xl:text-base gap-2 items-center">
                   <EmailIcon />
                   valdecir@vajupecas.com.br
                 </p>
@@ -40,12 +42,12 @@ export function Footer() {
           </div>
           <div className="flex justify-center">
             <div className="flex flex-col gap-5 text-white">
-              <h5 className="text-xs md:text-2xl font-semibold">Redes Sociais</h5>
+              <h5 className="text-xs md:text-xl 2xl:text-2xl font-semibold">Redes Sociais</h5>
               <div className="flex flex-col gap-4 font-medium">
                 <AnimatedLink
                   color="white"
                   content={
-                    <p className="text-[10px] md:text-base flex gap-2 items-center">
+                    <p className="text-[10px] md:text-xs 2xl:text-base flex gap-2 items-center">
                       <InstagramIcon /> @instagram
                     </p>
                   }
@@ -54,7 +56,7 @@ export function Footer() {
                 <AnimatedLink
                   color="white"
                   content={
-                    <p className="text-[10px] md:text-base flex gap-2 items-center">
+                    <p className="text-[10px] md:text-xs 2xl:text-base flex gap-2 items-center">
                       <FacebookIcon /> facebook
                     </p>
                   }
@@ -63,7 +65,7 @@ export function Footer() {
                 <AnimatedLink
                   color="white"
                   content={
-                    <p className="text-xs md:text-base flex gap-2 items-center">
+                    <p className="text-xs md:text-xs 2xl:text-base flex gap-2 items-center">
                       <LinkedinIcon /> linkedin
                     </p>
                   }
@@ -76,7 +78,7 @@ export function Footer() {
       </div>
       <div className="w-full py-5 border-t-1 border-t-neutral-600">
         <div className="justify-self-center text-center">
-          <span className="text-neutral-700 text-xs md:text-base">&copy; Copyright Vaju Pecas de Bombas e Betoneiras Ltda {year}</span>
+          <span className="text-neutral-700 text-xs md:text-xs 2xl:text-base">&copy; Copyright Vaju Pecas de Bombas e Betoneiras Ltda {year}</span>
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ const WhatsApp = () => {
         className="fixed z-50 bottom-4 right-4"
       >
         <a href="https://wa.me/5548992067057" target="blank">
-          <img className="w-full max-w-17" src={whatsappIcon} alt="WhatsApp Button" />
+          <img className="w-15 2xl:w-17" src={whatsappIcon} alt="WhatsApp Button" />
         </a>
       </motion.div>
     </>

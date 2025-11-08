@@ -19,19 +19,26 @@ export function useProductTypePage() {
 
   const refreshProductTypes = async () => setProductTypes(await getProductTypes());
 
-  const addProductType = async (productTypeName: string, producTypeHasProcucer: boolean) => {
+  const addProductType = async (productTypeName: string, producTypeHasProcucer: boolean, productTyoeHasProductModel: boolean) => {
     const data = {
       name: productTypeName,
       has_producer: producTypeHasProcucer,
+      has_product_model: productTyoeHasProductModel,
     };
 
     return postProductType(data);
   };
 
-  const editProductType = async (productTypeId: number, productTypeName: string, producTypeHasProcucer: boolean) => {
+  const editProductType = async (
+    productTypeId: number,
+    productTypeName: string,
+    producTypeHasProcucer: boolean,
+    productTyoeHasProductModel: boolean
+  ) => {
     const data = {
       name: productTypeName,
       has_producer: producTypeHasProcucer,
+      has_product_model: productTyoeHasProductModel,
     };
 
     return updateProductType(productTypeId, data);

@@ -95,7 +95,6 @@ export default function ProducersPage() {
                               <input
                                 id={`${obj.id}`}
                                 type="checkbox"
-                                name="filter"
                                 value={obj.id}
                                 checked={productTypeSelected === obj.id}
                                 onChange={() => filterByProductType(obj.id)}

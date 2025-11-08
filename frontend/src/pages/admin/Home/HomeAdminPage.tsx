@@ -1,4 +1,4 @@
-import { Package, PackageOpen, Boxes, Text, Wrench, Images } from "lucide-react";
+import { Package, PackageOpen, Boxes, FileBox, Text, User, Wrench, Images } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../../../components/Layout/AdminNavbar";
 import { motion, useInView } from "framer-motion";
@@ -11,42 +11,56 @@ type NavItem = {
   description: string;
 };
 
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
+
 const navItems: NavItem[] = [
   {
     name: "Famílias",
     icon: <Boxes size={50} color="white" />,
-    path: "/admin/product-types",
+    path: `/${ADMIN_PATH}/familias`,
     description: "Adicionar, Editar ou Apagar Famílias",
+  },
+  {
+    name: "Modelos",
+    icon: <FileBox size={50} color="white" />,
+    path: `/${ADMIN_PATH}/modelos`,
+    description: "Adicionar, Editar ou Apagar Modelos",
   },
   {
     name: "Fabricantes",
     icon: <Package size={50} color="white" />,
-    path: "/admin/producers",
+    path: `/${ADMIN_PATH}/fabricantes`,
     description: "Adicionar, Editar ou Apagar Fabricantes",
   },
   {
     name: "Produtos",
     icon: <PackageOpen size={50} color="white" />,
-    path: "/admin/products",
+    path: `/${ADMIN_PATH}/produtos`,
     description: "Adicionar, Editar ou Apagar Produtos",
   },
   {
     name: "Serviços",
     icon: <Wrench size={50} color="white" />,
-    path: "/admin/services",
+    path: `/${ADMIN_PATH}/servicos`,
     description: "Adicionar, Editar ou Apagar Serviços",
   },
   {
     name: "Textos",
     icon: <Text size={50} color="white" />,
-    path: "/admin/texts",
+    path: `/${ADMIN_PATH}/textos`,
     description: "Adicionar e Editar Textos",
   },
   {
     name: "Imagens",
     icon: <Images size={50} color="white" />,
-    path: "/admin/image-slider",
+    path: `/${ADMIN_PATH}/imagens-carrosel`,
     description: "Adicionar, Editar ou Remover Imagens do Carrousel",
+  },
+  {
+    name: "Clients",
+    icon: <User size={50} color="white" />,
+    path: `/${ADMIN_PATH}/clientes`,
+    description: "Visualizar Clientes",
   },
 ];
 
@@ -67,7 +81,7 @@ export default function HomeAdminPage() {
             {navItems.map((item) => (
               <motion.button
                 ref={ref}
-                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                whileHover={{ scale: 1.025, transition: { duration: 0.2 } }}
                 whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -81,7 +95,7 @@ export default function HomeAdminPage() {
                     {item.icon}
                     <span className="2xl:text-4xl lg:text-3xl text-white">{item.name}</span>
                   </div>
-                  <p className="text-white">{item.description}</p>
+                  <p className="text-white text-left">{item.description}</p>
                 </div>
               </motion.button>
             ))}

@@ -1,29 +1,21 @@
 import { useState } from "react";
-import type { ProductTypeResponseDTO } from "../../../../features/product_type/productType.model";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import type { Client } from "../../../../features/client/client.model";
 
-interface ProductTypesTableProps {
-  productTypes: ProductTypeResponseDTO[];
-  setProductTypeEdit: Function;
-  setEditProductTypeForm: Function;
-  setProductTypeRemove: Function;
-  setRemoveProductTypeForm: Function;
+interface ClientsTableProps {
+  clients: Client[];
+  setClientRemove: Function;
+  setRemoveClientForm: Function;
 }
 
-export function ProductTypesTable({
-  productTypes,
-  setProductTypeEdit,
-  setEditProductTypeForm,
-  setProductTypeRemove,
-  setRemoveProductTypeForm,
-}: ProductTypesTableProps) {
+export function ClientsTable({ clients, setClientRemove, setRemoveClientForm }: ClientsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const maxButtons = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = (productTypes ?? []).slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil((productTypes ?? []).length / itemsPerPage);
+  const currentItems = (clients ?? []).slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil((clients ?? []).length / itemsPerPage);
 
   const getVisiblePages = (currentPage: number, totalPages: number) => {
     let start = Math.max(currentPage - 1, 1); // começa em 1
@@ -41,14 +33,22 @@ export function ProductTypesTable({
     return pages;
   };
 
-  function handleEditProductTypeForm(productType: ProductTypeResponseDTO) {
-    setProductTypeEdit(productType);
-    setEditProductTypeForm(true);
+  function handleRemoveClient(client: Client) {
+    setClientRemove(client);
+    setRemoveClientForm(true);
   }
 
-  function handleRemoveProductType(productType: ProductTypeResponseDTO) {
-    setProductTypeRemove(productType);
-    setRemoveProductTypeForm(true);
+  function formatNumber(telephoneNumber: string) {
+    const semCodigoPais = telephoneNumber.startsWith("55") ? telephoneNumber.slice(2) : telephoneNumber;
+
+    if (semCodigoPais.length < 10) return telephoneNumber;
+
+    const ddd = semCodigoPais.slice(0, 2);
+    const isCelular = semCodigoPais.length === 11;
+    const parte1 = isCelular ? semCodigoPais.slice(2, 7) : semCodigoPais.slice(2, 6);
+    const parte2 = isCelular ? semCodigoPais.slice(7) : semCodigoPais.slice(6);
+
+    return `(${ddd}) ${parte1}-${parte2}`;
   }
 
   return (
@@ -61,13 +61,10 @@ export function ProductTypesTable({
                 Nome
               </th>
               <th scope="col" className="px-2 py-3 w-50 border-r-2 border-gray-400">
-                Tem Fabricante?
+                Email
               </th>
               <th scope="col" className="px-2 py-3 w-50 border-r-2 border-gray-400">
-                Tem Modelos?
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
+                Telefone
               </th>
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Remove</span>
@@ -80,20 +77,13 @@ export function ProductTypesTable({
                 <th scope="row" className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap border-r-2 border-gray-300">
                   {obj.name}
                 </th>
+                <td className="cursor-pointer px-6 py-4 text-center text-gray-900 font-medium border-r-2 border-gray-300">{obj.email}</td>
                 <td className="cursor-pointer px-6 py-4 text-center text-gray-900 font-medium border-r-2 border-gray-300">
-                  {obj.has_producer ? "Sim" : "Não"}
-                </td>
-                <td className="cursor-pointer px-6 py-4 text-center text-gray-900 font-medium border-r-2 border-gray-300">
-                  {obj.has_product_model ? "Sim" : "Não"}
-                </td>
-                <td className="px-6 py-4 font-medium text-right">
-                  <button onClick={() => handleEditProductTypeForm(obj)} type="button" className="cursor-pointer text-blue-600 hover:underline">
-                    Editar
-                  </button>
+                  {formatNumber(obj.number)}
                 </td>
                 <td className="px-6 py-4 font-medium text-right">
                   <button
-                    onClick={() => handleRemoveProductType(obj)}
+                    onClick={() => handleRemoveClient(obj)}
                     type="button"
                     className="cursor-pointer rounded-lg bg-red-500 hover:bg-red-600 text-white px-4 py-2"
                   >

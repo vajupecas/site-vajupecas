@@ -3,6 +3,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -15,14 +17,14 @@ export default function LoginPage() {
     setError(false);
     try {
       await auth?.login(email, password);
-      navigate("/admin/home");
+      navigate(`/${ADMIN_PATH}/home`);
     } catch {
       setError(true);
     }
   }
 
   async function handleForgetPassoword() {
-    navigate("/admin/forget-password");
+    navigate(`/${ADMIN_PATH}/forget-password`);
   }
 
   return (

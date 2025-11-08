@@ -16,10 +16,19 @@ function convertSlug(slug: string) {
     .join(" ");
 }
 
+function WhatsAppLink(productName: string) {
+  const phone = "5548992067057";
+  const message = `Olá! Gostaria de ter um orçamento do ${productName}.`;
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappLink = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
+  return whatsappLink;
+}
+
 export default function CatalogProductPage() {
-  const { productTypeSlug, producerSlug, productSlug } = useParams();
+  const { productTypeSlug, producerSlug, modelSlug, productSlug } = useParams();
   const productName = convertSlug(productSlug ?? "");
-  const producerName = convertSlug(producerSlug ?? "");
+  const activeSlug = producerSlug ?? modelSlug;
+  const activeName = convertSlug(activeSlug ?? "Produtos");
   const productTypeName = convertSlug(productTypeSlug ?? "");
   const navigate = useNavigate();
   const { product, loading } = useCatalogProductPage(productSlug ?? "");
@@ -33,17 +42,39 @@ export default function CatalogProductPage() {
           <Navbar />
         </div>
         <div className="flex flex-col mt-5 mb-20 md:mb-0 h-full w-4/5 md:w-3/4">
-          <div className="flex gap-2 text-sm md:text-base text-gray-800">
+          <div className="flex gap-2 text-sm 2xl:text-base text-gray-800">
             <span onClick={() => navigate("/")} className="cursor-pointer">
               Home
             </span>
             <span className="text-orange-400 font-medium cursor-default">/</span>
-            <span onClick={() => navigate(`/catalogo/${productTypeSlug}`)} className="cursor-pointer">
+            <span
+              onClick={() => {
+                let path = `/catalogo/${productTypeSlug}`;
+                if (producerSlug) {
+                  path += `/fabricantes`;
+                } else if (modelSlug) {
+                  path += `/modelos`;
+                }
+                navigate(path);
+              }}
+              className="cursor-pointer"
+            >
               {productTypeName}
             </span>
             <span className="text-orange-400 font-medium cursor-default">/</span>
-            <span onClick={() => navigate(`/catalogo/${productTypeSlug}/${producerSlug}`)} className="cursor-pointer">
-              {producerName}
+            <span
+              onClick={() => {
+                let path = `/catalogo/${productTypeSlug}`;
+                if (producerSlug) {
+                  path += `/fabricantes/${producerSlug}`;
+                } else if (modelSlug) {
+                  path += `/modelos/${modelSlug}`;
+                }
+                navigate(path);
+              }}
+              className="cursor-pointer"
+            >
+              {activeName}
             </span>
             <span className="text-orange-400 font-medium cursor-default">/</span>
             <span onClick={() => null} className="cursor-pointer">
@@ -58,16 +89,16 @@ export default function CatalogProductPage() {
                   <img
                     src={product?.url_image}
                     alt=""
-                    className="px-2 pt-2 w-full h-[300px] md:h-[450px] object-fill border-1 rounded-xl border-gray-400"
+                    className="px-2 pt-2 w-full h-[300px] md:h-[400px] 2xl:h-[450px] object-fill border-1 rounded-xl border-gray-400"
                   />
                 </div>
                 <div className="flex flex-col h-full w-full justify-between col-start-4 col-span-2 py-4 gap-10 md:gap-0">
                   <div className="flex flex-col gap-6">
-                    <h3 className="text-2xl md:text-4xl font-medium">{product?.name}</h3>
-                    <p className="text-md md:text-lg text-justify">
+                    <h3 className="text-2xl 2xl:text-4xl font-medium">{product?.name}</h3>
+                    <p className="text-md 2xl:text-lg text-justify">
                       <span className="font-semibold">Fabricante:</span> {product?.producer.name}
                     </p>
-                    <p className="text-md md:text-lg text-justify">
+                    <p className="text-md 2xl:text-lg text-justify">
                       <span className="font-semibold">Descrição:</span> {product?.description}
                     </p>
                   </div>
@@ -77,13 +108,13 @@ export default function CatalogProductPage() {
                       colorHover="#f8741a"
                       content={
                         <div className="flex gap-2 items-center">
-                          <p className="text-lg md:text-xl">Solicitar Orçamento</p>
-                          <DollarSignIcon className="text-xl md:text-3xl" />
+                          <p className="text-lg 2xl:text-xl">Solicitar Orçamento</p>
+                          <DollarSignIcon className="text-xl 2xl:text-3xl" />
                         </div>
                       }
                       disabled={false}
                       adicionalStyle="w-fit h-fit p-3 text-white"
-                      onClickFunction={() => null}
+                      onClickFunction={() => window.open(WhatsAppLink(productName), "_blank")}
                     />
                   </div>
                 </div>

@@ -13,7 +13,7 @@ export function useHomePage() {
     const fetchData = async () => {
       setLoading(true);
       setProductTypes(await getProductTypesWithProducers());
-      setSlideImages(await await getSliderImages());
+      setSlideImages(await getSliderImages());
       setLoading(false);
     };
     fetchData();

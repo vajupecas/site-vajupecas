@@ -25,11 +25,11 @@ export default function Navbar() {
     <div className="z-50 sm:flex hidden items-center text-black bg-white w-full shadow-sm">
       <div className="absolute w-fit mx-20">
         <NavLink to={"/"} className="block w-fit">
-          <img src={SiteLogo} className="w-18" alt="" />
+          <img src={SiteLogo} className="w-15 2xl:w-18" alt="" />
         </NavLink>
       </div>
-      <nav className="flex flex-1 justify-center m-7">
-        <div className="flex gap-12 text-lg text-gray-700items-center">
+      <nav className="flex flex-1 justify-center m-6 2xl:m-7">
+        <div className="flex gap-12 text-md 2xl:text-lg text-gray-700 tems-center">
           <NavbarLink
             to="/"
             content={

@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
-import { useCatalogProducersPage } from "./useCatalogProducersPage";
 import Navbar from "../../../../components/Layout/Navbar";
 import TopBar from "../../../../components/Layout/TobBar";
 import Loader from "../../../../components/Layout/Loader";
 import MobileNavbar from "../../../../components/Layout/MobileNavbar";
 import { Footer } from "../../../../components/Layout/Footer";
+import { useCatalogModelsPage } from "./useCatalogModelsPage";
 
 function convertSlug(slug: string) {
   return slug
@@ -16,11 +16,11 @@ function convertSlug(slug: string) {
     .join(" ");
 }
 
-export default function CatalogProducersPage() {
+export default function CatalogModelsPage() {
   const { productTypeSlug } = useParams();
   const productTypeName = convertSlug(productTypeSlug ?? "");
   const navigate = useNavigate();
-  const { producers, loading } = useCatalogProducersPage(productTypeSlug ?? "");
+  const { models, loading } = useCatalogModelsPage(productTypeSlug ?? "");
 
   return (
     <div className="bg-gray-50 h-full w-full">
@@ -37,14 +37,14 @@ export default function CatalogProducersPage() {
                 Home
               </span>
               <span className="text-orange-400 font-medium cursor-default">/</span>
-              <span onClick={() => navigate(`/catalogo/${productTypeSlug}`)} className="cursor-pointer">
+              <span onClick={() => navigate(`/catalogo/${productTypeSlug}/modelos`)} className="cursor-pointer">
                 {productTypeName}
               </span>
             </div>
             <h2 className="text-gray-700 text-2xl md:text-3xl 2xl:text-5xl font-medium">
               Selecione o{" "}
               <span className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.75 after:w-full after:bg-orange-400">
-                Fabricante
+                Modelo
               </span>
               :
             </h2>
@@ -53,10 +53,10 @@ export default function CatalogProducersPage() {
           {!loading && (
             <div
               className={`2xl:w-2/3 mt-10 mb-20 md:0 2xl:mt-15 flex flex-col md:grid gap-6 ${
-                producers.length === 1 ? "md:grid-cols-1" : producers.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+                models.length === 1 ? "md:grid-cols-1" : models.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
               }`}
             >
-              {producers.map((obj) => (
+              {models.map((obj) => (
                 <motion.button
                   key={obj.name}
                   whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}

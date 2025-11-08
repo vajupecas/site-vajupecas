@@ -46,7 +46,7 @@ export default function ContactPage() {
             <TopBar />
             <MobileNavbar />
             <Navbar />
-            <div className="flex flex-col-reverse items-center md:grid md:grid-cols-5 mt-5 md:mt-20 md:w-4/6 gap-5 overflow-hidden justify-center">
+            <div className="flex flex-col-reverse items-center md:grid md:grid-cols-5 mt-5 md:mt-10 2xl:mt-20 md:w-4/6 gap-5 overflow-hidden justify-center">
               <div className="col-span-2 pl-5 flex flex-col h-full gap-15 overflow-hidden p-5">
                 <div>
                   <div className="h-fit flex flex-col gap-10 text-gray-800 overflow-hidden">
@@ -86,11 +86,11 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="w-7/8 md:w-4/5 col-span-3 flex gap-3 justify-self-center overflow-hidden rounded-2xl bg-neutral-950">
-                <div className="flex flex-col items-center w-full h-full gap-5 md:gap-10 py-10 px-2 md:px-10 text-white">
+                <div className="flex flex-col items-center w-full h-full gap-5 md:gap-10 py-10 px-2 2xl:px-10 text-white">
                   <div>
                     <h4 className="font-semibold text-center text-xl md:text-2xl">ENTRE EM CONTATO CONOSCO</h4>
                   </div>
-                  <div className="flex flex-col gap-12 md:w-1/2">
+                  <div className="flex flex-col gap-12 md:w-2/3 2xl:w-1/2">
                     <div className="flex flex-col gap-7 w-full">
                       <div className="flex flex-col gap-1.5">
                         <label htmlFor="name">Nome</label>

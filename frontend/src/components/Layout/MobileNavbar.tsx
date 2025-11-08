@@ -27,21 +27,21 @@ export default function MobileNavbar() {
   }
 
   return (
-    <div className={`sm:hidden w-full flex items-center flex-col bg-white ${open ? "" : "shadow-sm"}`}>
+    <div className={`sm:hidden h-fit w-full flex items-center flex-col bg-white ${open ? "" : "shadow-sm"}`}>
       <div className="flex items-center justify-between w-full">
         <div className="mx-5">
           <NavLink to={"/"} className="block w-fit">
             <img src={SiteLogo} className="w-15" alt="" />
           </NavLink>
         </div>
-        <button onClick={toggleNavbar} className="m-10 flex flex-col gap-1.5">
+        <button onClick={toggleNavbar} className="m-6 flex flex-col gap-1.5">
           <div className={`h-1 w-9 bg-orange-500 transition-transform duration-300 ${open ? "rotate-45 translate-y-2.5" : ""}`}></div>
           <div className={`h-1 w-9 bg-orange-500 transition-all duration-300 ${open ? "opacity-0" : "opacity-100"}`}></div>
           <div className={`h-1 w-9 bg-orange-500 transition-transform duration-300 ${open ? "-rotate-45 -translate-y-2.5" : ""}`}></div>
         </button>
       </div>
       <nav
-        className={`transition-all flex justify-center duration-300 absolute z-50 top-32 w-full bg-white overflow-hidden
+        className={`transition-all flex justify-center duration-300 absolute z-50 top-25 w-full bg-white overflow-hidden
     ${open ? "max-h-[100vh] opacity-100 pb-10" : "max-h-0 opacity-0"}`}
       >
         <div className="flex items-center flex-col gap-6 text-lg w-fit text-gray-700">

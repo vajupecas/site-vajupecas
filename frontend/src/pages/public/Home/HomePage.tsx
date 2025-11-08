@@ -18,7 +18,7 @@ export default function HomePage() {
       {loading && <Loader />}
       {!loading && (
         <div className="h-full w-screen bg-gray-50 flex flex-col overflow-x-hidden">
-          <div className="h-screen flex flex-col">
+          <div className="h-dvh flex flex-col">
             <TopBar />
             <div className="flex sm:flex-row flex-col flex-1 overflow-hidden">
               <MobileNavbar />
@@ -29,7 +29,7 @@ export default function HomePage() {
           <div className="flex bg-neutral-950 py-20 flex-col gap-20 md:gap-25 items-center">
             <InfoBar />
             <div className="w-full flex flex-col gap-10 items-center text-white">
-              <h3 className="text-center font-bold text-3xl md:text-4xl">Promoções e Destaques</h3>
+              <h3 className="text-center font-bold text-3xl 2xl:text-4xl">Promoções e Destaques</h3>
               <Slider slideImages={slideImages} />
             </div>
           </div>

@@ -20,7 +20,7 @@ export default function Contact() {
 
     setClientName("");
     setClientEmail("");
-    setClientNumber("");
+    setClientNumber("+55");
 
     await postClient(data);
   }

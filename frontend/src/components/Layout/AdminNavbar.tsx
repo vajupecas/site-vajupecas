@@ -1,4 +1,4 @@
-import { Home, Package, PackageOpen, Boxes, Text, Wrench, Images } from "lucide-react";
+import { Home, Package, PackageOpen, Boxes, FileBox, User, Text, Wrench, Images } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SiteLogo from "../../assets/images/logos/logo.png";
 import { motion } from "framer-motion";
@@ -9,14 +9,18 @@ type NavItem = {
   path: string;
 };
 
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
+
 const navItems: NavItem[] = [
-  { name: "Home", icon: <Home className="2xl:w-5 lg:w-4" />, path: "/admin/home" },
-  { name: "Famílias", icon: <Boxes className="2xl:w-5 lg:w-4" />, path: "/admin/product-types" },
-  { name: "Fabricantes", icon: <Package className="2xl:w-5 lg:w-4" />, path: "/admin/producers" },
-  { name: "Produtos", icon: <PackageOpen className="2xl:w-5 lg:w-4" />, path: "/admin/products" },
-  { name: "Serviços", icon: <Wrench className="2xl:w-5 lg:w-4" />, path: "/admin/services" },
-  { name: "Textos", icon: <Text className="2xl:w-5 lg:w-4" />, path: "/admin/texts" },
-  { name: "Imagens", icon: <Images className="2xl:w-5 lg:w-4" />, path: "/admin/image-slider" },
+  { name: "Home", icon: <Home className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/home` },
+  { name: "Famílias", icon: <Boxes className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/familias` },
+  { name: "Modelos", icon: <FileBox className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/modelos` },
+  { name: "Fabricantes", icon: <Package className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/fabricantes` },
+  { name: "Produtos", icon: <PackageOpen className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/produtos` },
+  { name: "Serviços", icon: <Wrench className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/servicos` },
+  { name: "Textos", icon: <Text className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/textos` },
+  { name: "Imagens", icon: <Images className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/imagens-carrosel` },
+  { name: "Clientes", icon: <User className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/clientes` },
 ];
 
 export default function AdminNavbar() {

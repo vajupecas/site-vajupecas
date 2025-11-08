@@ -22,6 +22,9 @@ import ContactPage from "./pages/public/Contact/ContactPage.tsx";
 import SliderImagePage from "./pages/admin/Slider/SliderPage.tsx";
 import ServicePage from "./pages/admin/Service/ServicePage.tsx";
 import ServicesPage from "./pages/public/Services/ServicesPage.tsx";
+import ProductModelsPage from "./pages/admin/ProductModels/ProductModelPage.tsx";
+import CatalogModelsPage from "./pages/public/Catalog/Models/CatalogModelsPage.tsx";
+import ClientsPage from "./pages/admin/Clients/ClientsPage.tsx";
 
 const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
 
@@ -47,37 +50,53 @@ const router = createBrowserRouter([
         path: "/contato",
         element: <ContactPage />,
       },
-      { path: `${ADMIN_PATH}/login`, element: <LoginPage /> },
+      { path: `/${ADMIN_PATH}/login`, element: <LoginPage /> },
       {
-        path: `${ADMIN_PATH}/forget-password`,
+        path: `/${ADMIN_PATH}/forget-password`,
         element: <ForgetPassword />,
       },
       {
-        path: `/catalogo/:productTypeSlug/`,
+        path: `/catalogo/:productTypeSlug/fabricantes`,
         element: <CatalogProducersPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/:producerSlug`,
+        path: `/catalogo/:productTypeSlug/modelos`,
+        element: <CatalogModelsPage />,
+      },
+      {
+        path: `/catalogo/:productTypeSlug/produtos`,
         element: <CatalogProductsPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/:producerSlug/produtos`,
+        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug`,
         element: <CatalogProductsPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/:producerSlug/:productSlug`,
+        path: `/catalogo/:productTypeSlug/modelos/:modelSlug`,
+        element: <CatalogProductsPage />,
+      },
+      {
+        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug/:productSlug`,
         element: <CatalogProductPage />,
       },
       {
-        path: "/admin",
+        path: `/catalogo/:productTypeSlug/modelos/:modelSlug/:productSlug`,
+        element: <CatalogProductPage />,
+      },
+      {
+        path: `/catalogo/:productTypeSlug/produtos/:productSlug`,
+        element: <CatalogProductPage />,
+      },
+      {
+        path: `/${ADMIN_PATH}`,
         element: (
           <PrivateRoute>
-            <Navigate to="/admin/home" replace />
+            <Navigate to={`/${ADMIN_PATH}/home`} replace />
           </PrivateRoute>
         ),
       },
       {
-        path: `${ADMIN_PATH}/home`,
+        path: `/${ADMIN_PATH}/home`,
         element: (
           <PrivateRoute>
             <HomeAdminPage />
@@ -85,7 +104,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: `${ADMIN_PATH}/product-types`,
+        path: `/${ADMIN_PATH}/familias`,
         element: (
           <PrivateRoute>
             <ProductTypesPage />
@@ -93,7 +112,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: `${ADMIN_PATH}/producers`,
+        path: `/${ADMIN_PATH}/fabricantes`,
         element: (
           <PrivateRoute>
             <ProducerPage />
@@ -101,7 +120,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: `${ADMIN_PATH}/products`,
+        path: `/${ADMIN_PATH}/modelos`,
+        element: (
+          <PrivateRoute>
+            <ProductModelsPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: `/${ADMIN_PATH}/produtos`,
         element: (
           <PrivateRoute>
             <ProductsPage />
@@ -109,7 +136,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: `${ADMIN_PATH}/texts`,
+        path: `/${ADMIN_PATH}/textos`,
         element: (
           <PrivateRoute>
             <TextsPage />
@@ -117,7 +144,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: `${ADMIN_PATH}/image-slider`,
+        path: `/${ADMIN_PATH}/imagens-carrosel`,
         element: (
           <PrivateRoute>
             <SliderImagePage />
@@ -125,10 +152,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: `${ADMIN_PATH}/services`,
+        path: `/${ADMIN_PATH}/servicos`,
         element: (
           <PrivateRoute>
             <ServicePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: `/${ADMIN_PATH}/clientes`,
+        element: (
+          <PrivateRoute>
+            <ClientsPage />
           </PrivateRoute>
         ),
       },

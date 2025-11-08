@@ -5,6 +5,8 @@ import { Navigate } from "react-router-dom";
 export function PrivateRoute({ children }: { children: React.ReactNode }) {
   const auth = useContext(AuthContext);
 
+  const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
+
   if (!auth) return;
 
   if (auth.loading) {
@@ -12,7 +14,7 @@ export function PrivateRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!auth.isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to={`/${ADMIN_PATH}/login`} replace />;
   }
 
   return <>{children}</>;

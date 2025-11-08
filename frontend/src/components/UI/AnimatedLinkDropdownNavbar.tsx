@@ -53,7 +53,11 @@ export function AnimatedLinkDropdownNavbar({ content, dropdownContent, color = "
                 <AnimatedLink
                   color={colorDropdown}
                   content={obj.name}
-                  to={`/catalogo/${obj.name.replace(/\s+/g, "-").toLowerCase()}`}
+                  to={
+                    obj.has_producer
+                      ? `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}`
+                      : `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}/produtos`
+                  }
                   adicionalStyle="w-fit"
                 />
               </motion.li>

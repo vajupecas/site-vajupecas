@@ -16,6 +16,21 @@ export const getProductsByProducerSlug = async (producerSlug: string): Promise<A
   return response.data;
 };
 
+export const getProductsByProductModel = async (productModelId: number): Promise<Array<Product>> => {
+  const response = await API.get(`/products/?product_model=${productModelId}`);
+  return response.data;
+};
+
+export const getProductsByProductModelSlug = async (productModelSlug: string): Promise<Array<Product>> => {
+  const response = await API.get(`/products/?product_model=${productModelSlug}`);
+  return response.data;
+};
+
+export const getProductsByProductTypeSlug = async (productTypeSlug: string): Promise<Array<Product>> => {
+  const response = await API.get(`/products/?product_type=${productTypeSlug}`);
+  return response.data;
+};
+
 export const getProductsById = async (productId: number): Promise<Product> => {
   const response = await API.get(`/products/${productId}`);
   return response.data;
@@ -27,7 +42,6 @@ export const getProductsBySlug = async (productSlug: string): Promise<Product> =
 };
 
 export const postProduct = async (data: ProductBaseDTO): Promise<Product> => {
-  console.log(data);
   const response = await API.post("/products", data);
   return response.data;
 };

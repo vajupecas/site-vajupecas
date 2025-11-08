@@ -1,6 +1,7 @@
 import API from "../../api/axios.ts";
 import type { ProductTypeResponseDTO, ProductTypeBaseDTO, ProductTypeUpdateDTO } from "./productType.model.ts";
 import type { ProducerResponseDTO } from "../producer/producer.model.ts";
+import type { ProductModelResponseDTO } from "../product_model/productModels.model.ts";
 
 export const getProductTypes = async (): Promise<Array<ProductTypeResponseDTO>> => {
   const response = await API.get(`/product-types`);
@@ -24,6 +25,16 @@ export const getProducersByTypeId = async (productTypeId: number): Promise<Array
 
 export const getProducersByTypeSlug = async (productTypeSlug: string): Promise<Array<ProducerResponseDTO>> => {
   const response = await API.get(`/product-types/${productTypeSlug}/producers`);
+  return response.data;
+};
+
+export const getProductModelsByTypeId = async (productTypeId: number): Promise<Array<ProductModelResponseDTO>> => {
+  const response = await API.get(`/product-types/${productTypeId}/product-models`);
+  return response.data;
+};
+
+export const getProductModelsByTypeSlug = async (productTypeSlug: string): Promise<Array<ProductModelResponseDTO>> => {
+  const response = await API.get(`/product-types/${productTypeSlug}/product-models`);
   return response.data;
 };
 

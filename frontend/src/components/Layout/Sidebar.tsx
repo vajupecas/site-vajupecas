@@ -25,11 +25,11 @@ export default function Sidebar() {
     <aside className="z-50 sm:flex px-10 py-5 gap-15 bg-gray-50 hidden items-end flex-col w-1/4 shadow-xl">
       <div>
         <NavLink to={"/"} className="block w-fit">
-          <img src={SiteLogo} className="w-40" alt="" />
+          <img src={SiteLogo} className="w-35 2xl:w-40" alt="" />
         </NavLink>
       </div>
       <nav>
-        <div className="flex flex-col gap-9 text-xl text-gray-800 items-end">
+        <div className="flex flex-col gap-7 2xl:gap-9 text-lg 2xl:text-xl text-gray-800 items-end">
           <NavbarLink
             to="/"
             content={

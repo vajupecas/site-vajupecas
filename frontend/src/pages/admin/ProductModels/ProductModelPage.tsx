@@ -1,40 +1,38 @@
 import { useState } from "react";
 import { Loader, Search } from "lucide-react";
 import AdminNavbar from "../../../components/Layout/AdminNavbar";
-import type { ProductResponseDTO } from "../../../features/product/product.model";
+import type { ProductModelResponseDTO } from "../../../features/product_model/productModels.model";
 import Alert from "../../../components/UI/Alert";
 import { motion } from "framer-motion";
-import { useProductsPage } from "./useProductsPage";
-import AddProductForm from "./components/AddProductForm";
-import EditProductForm from "./components/EditProductForm";
-import ProductsTable from "./components/ProductsTable";
-import RemoveProductForm from "./components/RemoveProductForm";
 import { AnimatedButton } from "../../../components/UI/AnimatedButton";
+import { useProductModelPage } from "./useProductModelPage";
+import AddProductModelForm from "./components/AddProductModelForm";
+import EditProductModelForm from "./components/EditProductModelForm";
+import RemoveProductModelForm from "./components/RemoveProductModelForm";
+import ProductModelsTable from "./components/ProductModelTable";
 
-export default function ProductsPage() {
+export default function ProductModelsPage() {
   const {
-    products,
-    producers,
-    productTypes,
     productModels,
+    productTypes,
     loading,
-    producerSelected,
-    refreshProducts,
-    addProduct,
-    editProduct,
-    removeProduct,
-    filterByProducer,
+    productTypeSelected,
+    refreshProductModel,
+    addProductModel,
+    editProductModel,
+    removeProductModel,
+    filterByProductType,
     filterSearch,
     setFilterSearch,
-  } = useProductsPage();
+  } = useProductModelPage();
 
   const [filterList, setFilterList] = useState(false);
 
-  const [addProductForm, setAddProductForm] = useState(false);
-  const [editProductForm, setEditProductForm] = useState(false);
-  const [productEdit, setProductEdit] = useState<ProductResponseDTO | null>(null);
-  const [productRemove, setProductRemove] = useState<ProductResponseDTO | null>(null);
-  const [removeProductForm, setRemoveProductForm] = useState(false);
+  const [addProductModelForm, setAddProductModelForm] = useState(false);
+  const [editProductModelForm, setEditProductModelForm] = useState(false);
+  const [productModelEdit, setProductModelEdit] = useState<ProductModelResponseDTO | null>(null);
+  const [removeProductModelForm, setRemoveProductModelForm] = useState<ProductModelResponseDTO | null>(null);
+  const [productModelRemove, setProductModelRemove] = useState<ProductModelResponseDTO | null>(null);
 
   const [alert, setAlert] = useState(false);
   const [alertColor, setAlertColor] = useState("");
@@ -53,7 +51,7 @@ export default function ProductsPage() {
       <div className="h-screen w-screen flex">
         <AdminNavbar />
         <div className="flex-1 justify-self-center flex flex-col gap-14 2xl:mt-20 lg:mt-15 mx-12 mb-12 items-center">
-          <h2 className="w-full 2xl:text-5xl lg:text-4xl text-center text-orange-500 font-semibold">PRODUTOS</h2>
+          <h2 className="w-full 2xl:text-5xl lg:text-4xl text-center text-orange-500 font-semibold">MODELOS</h2>
           <div className="2xl:w-1/2 lg:w-3/5 h-full">
             <div className="flex justify-between">
               <div className="flex gap-8">
@@ -63,13 +61,13 @@ export default function ProductsPage() {
                   colorDisabled="#d1d5dc"
                   content={
                     <>
-                      Filtrar
+                      Filtrar{" "}
                       <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                       </svg>
                     </>
                   }
-                  disabled={producers.length === 0}
+                  disabled={productTypes.length === 0}
                   onClickFunction={() => setFilterList((prev) => !prev)}
                   adicionalStyle="px-4 py-2 text-white"
                 />
@@ -77,20 +75,20 @@ export default function ProductsPage() {
                   color="#00c950"
                   colorHover="#00a63e"
                   colorDisabled="#7bf1a8"
+                  disabled={productTypes.length === 0}
+                  onClickFunction={() => setAddProductModelForm(true)}
                   content={"Adicionar"}
-                  disabled={producers.length === 0}
-                  onClickFunction={() => setAddProductForm(true)}
                   adicionalStyle="px-4 py-2 text-white"
                 />
-                {filterList && producers.length != 0 && (
+                {filterList && productTypes.length != 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={filterList ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.25, ease: "easeOut" }}
                     className="divide-y absolute mt-11 w-fit"
                   >
-                    <ul className="bg-gray-700 rounded-lg text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto">
-                      {producers.map((obj) => (
+                    <ul className="bg-gray-700 rounded-lg w-fit text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto">
+                      {productTypes.map((obj) => (
                         <>
                           <li key={obj.id} id={`${obj.id}`}>
                             <div className="flex gap-2 items-center rounded-lg px-1 py-1 hover:bg-gray-600">
@@ -99,8 +97,8 @@ export default function ProductsPage() {
                                 type="checkbox"
                                 name="filter"
                                 value={obj.id}
-                                checked={producerSelected === obj.id}
-                                onChange={() => filterByProducer(obj.id)}
+                                checked={productTypeSelected === obj.id}
+                                onChange={() => filterByProductType(obj.id)}
                               />
                               <label htmlFor={`${obj.id}`}>{obj.name}</label>
                             </div>
@@ -117,65 +115,61 @@ export default function ProductsPage() {
                   type="text"
                   name="filter-search"
                   id="filter-search"
-                  placeholder="Pesquisar Produtos"
+                  placeholder="Pesquisar Modelos"
                   className="w-full pl-10 pr-3 py-2 outline-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={filterSearch}
                   onChange={(e) => setFilterSearch(e.target.value)}
                 />
               </div>
             </div>
-            {products.length === 0 && (
+            {productModels.length === 0 && (
               <div className="self-center justify-self-center flex items-center h-full">
                 {loading && <Loader className="mb-40 animate-spin" />}
-                {!loading && <p className="text-white0 mb-40">Nenhum Produto Cadastrado</p>}
+                {!loading && <p className="text-white0 mb-40">Nenhum Modelo Cadastrado</p>}
               </div>
             )}
-            {products.length != 0 && (
-              <>
-                <ProductsTable
-                  products={products}
-                  setProductEdit={setProductEdit}
-                  setEditProductForm={setEditProductForm}
-                  setProductRemove={setProductRemove}
-                  setRemoveProductForm={setRemoveProductForm}
-                />
-              </>
+            {productModels.length != 0 && (
+              <ProductModelsTable
+                productModels={productModels}
+                setEditProductModelForm={setEditProductModelForm}
+                setProductModelEdit={setProductModelEdit}
+                setProductModelRemove={setProductModelRemove}
+                setRemoveProductModelForm={setRemoveProductModelForm}
+              />
             )}
           </div>
-          {addProductForm && (
+          {addProductModelForm && (
             <>
-              <AddProductForm
-                addProduct={addProduct}
-                setAddProductForm={setAddProductForm}
-                producers={producers}
+              <AddProductModelForm
+                addProductModel={addProductModel}
                 productTypes={productTypes}
-                models={productModels}
-                refreshProducts={refreshProducts}
+                setAddProductModelForm={setAddProductModelForm}
+                refreshProductModel={refreshProductModel}
               />
             </>
           )}
-          {editProductForm && (
+          {editProductModelForm && (
             <>
-              <EditProductForm
-                product={productEdit}
-                editProduct={editProduct}
-                setEditProductForm={setEditProductForm}
-                setProductEdit={setProductEdit}
-                producers={producers}
+              <EditProductModelForm
+                editProductModel={editProductModel}
+                productModel={productModelEdit}
                 productTypes={productTypes}
-                models={productModels}
-                refreshProducts={refreshProducts}
+                setEditProductModelForm={setEditProductModelForm}
+                setProductModelEdit={setProductModelEdit}
+                refreshProductModel={refreshProductModel}
               />
             </>
           )}
-          {removeProductForm && (
-            <RemoveProductForm
-              productRemove={productRemove}
-              removeProduct={removeProduct}
-              setProductRemove={setProductRemove}
-              setRemoveProductForm={setRemoveProductForm}
-              refreshProducts={refreshProducts}
-            />
+          {removeProductModelForm && (
+            <>
+              <RemoveProductModelForm
+                productModel={productModelRemove}
+                removeProductModel={removeProductModel}
+                setProductModelRemove={setProductModelRemove}
+                setRemoveProductModelForm={setRemoveProductModelForm}
+                refreshProductModel={refreshProductModel}
+              />
+            </>
           )}
         </div>
         {alert && <Alert color={alertColor} text={alertText} icon={alertIcon} onClose={() => resetAlert()} />}
