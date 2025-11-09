@@ -107,7 +107,7 @@ Este e-mail foi enviado automaticamente pelo formulário de contato da VajuPeça
               <p style="margin:6px 0 12px 0;">
                 <a href="https://www.facebook.com/p/Vaju-Pe%C3%A7as-de-Bombas-e-Betoneiras-100037942788609/" style="margin:0 6px;">Facebook</a> •
                 <a href="https://www.instagram.com/vaju_pecas/" style="margin:0 6px;">Instagram</a> •
-                <a href="https://wa.me/5548992067057" style="margin:0 6px;">WhatsApp</a>
+                <a href="https://api.whatsapp.com/send?phone=5548992067057" style="margin:0 6px;">WhatsApp</a>
               </p>
 
               <p style="margin:0; color:#999999; font-size:12px;">Este e-mail foi enviado automaticamente pelo formulário de contato da VajuPeças.</p>

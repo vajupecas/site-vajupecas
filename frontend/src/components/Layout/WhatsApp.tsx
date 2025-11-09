@@ -23,7 +23,7 @@ const WhatsApp = () => {
         transition={{ x: { duration: 2.5 }, scale: { duration: 0.25 } }}
         className="fixed z-50 bottom-4 right-4"
       >
-        <a href="https://wa.me/5548992067057" target="blank">
+        <a href="https://api.whatsapp.com/send?phone=5548992067057" target="blank">
           <img className="w-15 2xl:w-17" src={whatsappIcon} alt="WhatsApp Button" />
         </a>
       </motion.div>
