@@ -1,6 +1,6 @@
 import { Home, Package, PackageOpen, Boxes, FileBox, User, Text, Wrench, Images } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import SiteLogo from "../../assets/images/logos/logo.png";
+import SiteLogo from "../../../public/logo/logo.png";
 import { motion } from "framer-motion";
 
 type NavItem = {

@@ -4,7 +4,7 @@ import { NavbarLink } from "../UI/NavbarLink";
 import { AnimatedLinkDropdownSidebar } from "../UI/AnimatedLinkDropdownSidebar";
 import type { ProductTypeResponseDTO } from "../../features/product_type/productType.model";
 import { getProductTypes } from "../../features/product_type/productType.service";
-import SiteLogo from "../../assets/images/logos/logo.webp";
+import SiteLogo from "../../../public/logo/logo.webp";
 import HomeIcon from "../../assets/icons/house.svg?react";
 import AboutIcon from "../../assets/icons/people.svg?react";
 import CatalogIcon from "../../assets/icons/truck.svg?react";
