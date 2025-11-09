@@ -71,11 +71,11 @@ export default function CatalogProductsPage() {
                 {activeName}
               </span>
             </div>
-            <div className="w-full flex justify-between items-center justify-self-center">
-              <h2 className="text-gray-700 text-2xl md:text-3xl 2xl:text-5xl relative font-medium after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-0.75 after:w-full after:bg-orange-400">
+            <div className="w-full flex flex-col md:flex-row gap-5 justify-between md:items-center justify-self-center">
+              <h2 className="text-gray-700 w-fit text-2xl md:text-3xl 2xl:text-5xl relative font-medium after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-0.75 after:w-full after:bg-orange-400">
                 {activeName}
               </h2>
-              <div className="flex gap-10">
+              <div className="flex flex-row gap-2 md:gap-10">
                 {producers.length != 0 && (
                   <AnimatedButton
                     color="#6a7282"
@@ -91,7 +91,7 @@ export default function CatalogProductsPage() {
                     }
                     disabled={producers.length === 0}
                     onClickFunction={() => setFilterList((prev) => !prev)}
-                    adicionalStyle="px-4 py-2 text-white"
+                    adicionalStyle="text-[12px] w-fit md:w-full md:text-base px-4 py-2 text-white"
                   />
                 )}
                 {filterList && producers.length != 0 && (
@@ -103,21 +103,19 @@ export default function CatalogProductsPage() {
                   >
                     <ul className="bg-gray-700 rounded-lg text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto">
                       {producers.map((obj) => (
-                        <>
-                          <li key={obj.id} id={`${obj.id}`}>
-                            <div className="flex gap-2 items-center rounded-lg px-1 py-1 hover:bg-gray-600">
-                              <input
-                                id={`${obj.id}`}
-                                type="checkbox"
-                                name="filter"
-                                value={obj.id}
-                                checked={producerSelected === obj.id}
-                                onChange={() => filterByProducer(obj.id)}
-                              />
-                              <label htmlFor={`${obj.id}`}>{obj.name}</label>
-                            </div>
-                          </li>
-                        </>
+                        <li key={obj.id} id={`${obj.id}`}>
+                          <div className="flex gap-2 items-center rounded-lg px-1 py-1 hover:bg-gray-600">
+                            <input
+                              id={`${obj.id}`}
+                              type="checkbox"
+                              name="filter"
+                              value={obj.id}
+                              checked={producerSelected === obj.id}
+                              onChange={() => filterByProducer(obj.id)}
+                            />
+                            <label htmlFor={`${obj.id}`}>{obj.name}</label>
+                          </div>
+                        </li>
                       ))}
                     </ul>
                   </motion.div>
