@@ -23,56 +23,114 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
               <div
                 onMouseEnter={() => setFocus(idx)}
                 key={obj.name}
-                className={` relative flex flex-col text-whiteflex-1 overflow-hidden transition-[flex-grow] duration-450 ease-out ${
-                  isFocused ? "flex-grow-2" : "flex-grow"
-                } pt-30 md:pt-42 `}
+                className={`
+                  pt-30
+                  md:pt-42
+                  flex
+                  flex-col
+                  text-white
+                  h-full
+                  flex-1
+                  outline-1
+                  outline-orange-100
+                  overflow-hidden
+                  transition-[flex-grow]
+                  duration-450
+                  ease-out
+                  bg-cover
+                  bg-center
+                  bg-no-repeat
+                  after:absolute after:inset-0
+                after:bg-black/20
+                  after:z-0
+                `}
                 style={{
                   flexGrow: window.innerWidth >= 768 ? (isFocused ? 2 : 0.5) : isFocused ? 2 : 0.25,
+                  backgroundImage: `url(${obj.url_image})`,
                 }}
               >
-                <img src={obj.url_image} alt={obj.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover z-0" />
-                <div className="absolute inset-0 bg-black/20 z-0"></div>
                 <div
-                  className={`relative z-10 flex flex-col items-center h-full w-full pb-1 transition-all duration-600 ${
-                    isFocused ? "" : "justify-end"
-                  }`}
+                  className={`
+                    flex
+                    flex-col
+                    items-center
+                    h-full
+                    w-full
+                    transition-all
+                    duration-600
+                    pb-1
+                    z-10
+                    ${isFocused ? "" : "justify-end"}
+                  `}
                 >
                   <div
-                    className={`flex justify-center ease-out ${isFocused ? "" : "-rotate-180 [writing-mode:vertical-lr]"} ${
-                      isFocused ? "mb-12" : "mb-2"
-                    }`}
+                    className={`
+                      flex
+                      justify-center
+                      ease-out
+                      ${isFocused ? "" : "-rotate-180 [writing-mode:vertical-lr]"}
+                      ${isFocused ? "mb-12" : "mb-2"}
+                    `}
                   >
                     <h3
-                      className={`text-white font-semibold cursor-default relative whitespace-nowrap after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-1 after:bg-orange-400 after:transition-[width] after:duration-600 ${
-                        isFocused
-                          ? "text-3xl md:text-4xl 2xl:text-5xl after:w-full"
-                          : "text-2xl md:text-3xl 2xl:text-4xl opacity-50 after:w-0 after:opacity-0"
-                      } `}
+                      className={`
+                        w-fit
+                        font-semibold
+                        cursor-default
+                        relative
+                        whitespace-nowrap
+                        after:content-['']
+                        after:absolute
+                        after:left-0
+                        after:-bottom-2
+                        after:h-1
+                        after:bg-orange-400
+                        after:transition-[width]
+                        after:duration-600
+                        ${
+                          isFocused
+                            ? "text-3xl md:text-4xl 2xl:text-5xl after:w-full"
+                            : "text-2xl md:text-3xl 2xl:text-4xl opacity-50 after:w-0 after:opacity-0"
+                        }
+                      `}
                     >
                       {obj.name.toUpperCase()}
                     </h3>
                   </div>
-
-                  {/* Lista interna */}
                   {listToRender && (
                     <div
-                      className={`flex flex-col items-center ease-out gap-5 ${
-                        isFocused ? "opacity-100 max-h-screen translate-y-0" : "opacity-0 max-h-0 translate-y-4 pointer-events-none overflow-hidden"
-                      } relative z-10 `}
+                      className={`
+                        flex
+                        flex-col
+                        items-center
+                        ease-out
+                        cursor-default
+                        gap-5
+                        ${
+                          isFocused ? "opacity-100 max-h-screen translate-y-0" : "opacity-0 max-h-0 translate-y-4 pointer-events-none overflow-hidden"
+                        }
+                      `}
                     >
-                      <ul className="text-white flex flex-col 2xl:gap-5 gap-2 list-disc font-medium marker:text-orange-400">
+                      <ul className="flex flex-col 2xl:gap-5 gap-2 list-disc font-medium marker:text-orange-400">
                         {listToRender.map((item) => (
                           <motion.button
-                            key={item.name}
                             type="button"
                             onClick={() => {
                               const objSlug = obj.name.replaceAll(/\s+/g, "-").toLowerCase();
                               const itemSlug = item.name.replaceAll(/\s+/g, "-").toLowerCase();
 
-                              navigate(`/catalogo/${objSlug}/${itemSlug}`);
+                              if (obj.has_producer) {
+                                navigate(`/catalogo/${objSlug}/${itemSlug}`);
+                              }
                             }}
-                            whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-                            whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
+                            whileHover={{
+                              scale: 1.1,
+                              transition: { duration: 0.2 },
+                            }}
+                            whileTap={{
+                              scale: 0.9,
+                              transition: { duration: 0.2 },
+                            }}
                             className="cursor-pointer text-lg md:text-2xl w-fit"
                           >
                             <li>{item.name}</li>
@@ -81,12 +139,13 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                       </ul>
                     </div>
                   )}
-
-                  {/* Botão “Mais” */}
                   <div
-                    className={`flex justify-center ease-out ${
-                      isFocused ? "opacity-100 max-h-screen mt-8" : "opacity-0 max-h-0 pointer-events-none overflow-hidden"
-                    } relative z-10`}
+                    className={`
+                      flex
+                      justify-center
+                      ease-out
+                      ${isFocused ? "opacity-100 max-h-screen mt-8" : "opacity-0 max-h-0 pointer-events-none overflow-hidden"}
+                    `}
                   >
                     <AnimatedButton
                       color="#ff8904"
@@ -96,9 +155,13 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                       adicionalStyle="text-white w-fit text-md 2xl:text-base px-5 py-1 2xl:px-7 2xl:py-2 font-semibold"
                       onClickFunction={() => {
                         const slug = obj.name.replaceAll(/\s+/g, "-").toLowerCase();
-                        if (obj.has_producer) navigate(`/catalogo/${slug}/fabricantes`);
-                        else if (obj.name === "Mangueiras Hidráulicas") navigate(`/catalogo/${slug}`);
-                        else navigate(`/catalogo/${slug}/produtos`);
+                        if (obj.has_producer) {
+                          navigate(`/catalogo/${slug}/fabricantes`);
+                        } else if (obj.name === "Mangueiras Hidráulicas") {
+                          navigate(`/catalogo/${slug}`);
+                        } else {
+                          navigate(`/catalogo/${slug}/produtos`);
+                        }
                       }}
                     />
                   </div>
