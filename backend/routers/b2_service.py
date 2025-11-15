@@ -3,6 +3,8 @@ from botocore.client import Config
 import uuid
 from fastapi import UploadFile
 import os
+from io import BytesIO
+from PIL import Image
 
 B2_KEY_ID = os.getenv("B2_KEY_ID")
 B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
@@ -21,16 +23,22 @@ client = session.client(
 )
 
 async def upload_to_b2(file: UploadFile):
-    ext = file.filename.split(".")[-1].lower()
-    key = f"{uuid.uuid4()}.{ext}"
+    original_bytes = await file.read()
 
-    file_bytes = await file.read()
+    img = Image.open(BytesIO(original_bytes)).convert("RGB")
+
+    buffer = BytesIO()
+    img.save(buffer, format="WEBP", quality=80)
+    buffer.seek(0)
+
+    key = f"{uuid.uuid4()}.webp"
 
     client.put_object(
         Bucket=B2_BUCKET,
         Key=key,
-        Body=file_bytes,
-        ContentType=file.content_type,
+        Body=buffer.getvalue(),
+        ContentType="image/webp",
+        CacheControl="public, max-age=31536000"
     )
     
     public_url = f"{B2_DOWNLOAD_ENDPOINT}/file/{B2_BUCKET}/{key}"
