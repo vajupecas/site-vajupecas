@@ -23,7 +23,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
               <div
                 onMouseEnter={() => setFocus(idx)}
                 key={obj.name}
-                className={`relative flex flex-col text-whiteflex-1 overflow-hidden transition-[flex-grow] duration-450 ease-out ${
+                className={`text-white relative flex flex-col text-whiteflex-1 overflow-hidden transition-[flex-grow] duration-450 ease-out ${
                   isFocused ? "flex-grow-2" : "flex-grow"
                 } pt-30 md:pt-42 `}
                 style={{
