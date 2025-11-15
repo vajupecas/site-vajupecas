@@ -23,7 +23,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
               <div
                 onMouseEnter={() => setFocus(idx)}
                 key={obj.name}
-                className={`text-white relative flex flex-col text-whiteflex-1 overflow-hidden transition-[flex-grow] duration-450 ease-out ${
+                className={` relative flex flex-col text-whiteflex-1 overflow-hidden transition-[flex-grow] duration-450 ease-out ${
                   isFocused ? "flex-grow-2" : "flex-grow"
                 } pt-30 md:pt-42 `}
                 style={{
@@ -43,7 +43,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                     }`}
                   >
                     <h3
-                      className={`font-semibold cursor-default relative whitespace-nowrap after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-1 after:bg-orange-400 after:transition-[width] after:duration-600 ${
+                      className={`text-white font-semibold cursor-default relative whitespace-nowrap after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-1 after:bg-orange-400 after:transition-[width] after:duration-600 ${
                         isFocused
                           ? "text-3xl md:text-4xl 2xl:text-5xl after:w-full"
                           : "text-2xl md:text-3xl 2xl:text-4xl opacity-50 after:w-0 after:opacity-0"
@@ -60,7 +60,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                         isFocused ? "opacity-100 max-h-screen translate-y-0" : "opacity-0 max-h-0 translate-y-4 pointer-events-none overflow-hidden"
                       } relative z-10 `}
                     >
-                      <ul className="flex flex-col 2xl:gap-5 gap-2 list-disc font-medium marker:text-orange-400">
+                      <ul className="text-white flex flex-col 2xl:gap-5 gap-2 list-disc font-medium marker:text-orange-400">
                         {listToRender.map((item) => (
                           <motion.button
                             key={item.name}
