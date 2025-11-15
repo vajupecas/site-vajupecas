@@ -16,13 +16,13 @@ export const getProductsByProducerSlug = async (producerSlug: string): Promise<A
   return response.data;
 };
 
-export const getProductsByProductModel = async (productModelId: number): Promise<Array<Product>> => {
-  const response = await API.get(`/products/?product_model=${productModelId}`);
+export const getProductsByModel = async (modelId: number): Promise<Array<Product>> => {
+  const response = await API.get(`/products/?model=${modelId}`);
   return response.data;
 };
 
-export const getProductsByProductModelSlug = async (productModelSlug: string): Promise<Array<Product>> => {
-  const response = await API.get(`/products/?product_model=${productModelSlug}`);
+export const getProductsByModelSlug = async (modelSlug: string): Promise<Array<Product>> => {
+  const response = await API.get(`/products/?model=${modelSlug}`);
   return response.data;
 };
 

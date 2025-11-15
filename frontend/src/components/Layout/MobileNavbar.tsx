@@ -17,7 +17,7 @@ export default function MobileNavbar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setProductTypes(await getProductTypes());
+      setProductTypes((await getProductTypes()).sort((a, b) => a.id - b.id));
     };
     fetchData();
   }, []);
@@ -76,7 +76,6 @@ export default function MobileNavbar() {
             color="#ff8904"
           />
           <AnimatedLinkDropdownSidebar
-            to="/catalogo"
             content={
               <div className="flex w-full justify-center items-center gap-2">
                 <CatalogIcon />

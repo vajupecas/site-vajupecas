@@ -99,27 +99,27 @@ export function ServiceTable({ services, setServiceEdit, setEditServiceForm, set
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowLeft />
+          <ArrowLeft className="2xl:size-6 size-5" />
         </button>
-
         {getVisiblePages(currentPage, totalPages).map((i) => (
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded ${currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"} cursor-pointer`}
+            className={`2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs rounded ${
+              currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"
+            } cursor-pointer`}
           >
             {i}
           </button>
         ))}
-
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowRight />
+          <ArrowRight className="2xl:size-6 size-5" />
         </button>
       </div>
     </>

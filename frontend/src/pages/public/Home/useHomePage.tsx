@@ -12,7 +12,7 @@ export function useHomePage() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setProductTypes(await getProductTypesWithProducers());
+      setProductTypes((await getProductTypesWithProducers()).sort((a, b) => a.id - b.id));
       setSlideImages(await getSliderImages());
       setLoading(false);
     };

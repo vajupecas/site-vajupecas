@@ -61,7 +61,7 @@ export default function CatalogProducersPage() {
                   key={obj.name}
                   whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                   type="button"
-                  onClick={() => navigate(`${obj.name.replaceAll(" ", "-").toLowerCase()}`)}
+                  onClick={() => navigate(`${obj.name.replaceAll(" ", "-").toLowerCase()}/produtos`)}
                   className="flex bg-white cursor-pointer select-none outline-1 outline-gray-400 rounded-lg items-center justify-center min-w-fit w-50 md:w-60 2xl:w-75 h-25 md:h-35 2xl:h-45"
                 >
                   <h4 className="text-gray-700 text-xl md:text-2xl 2xl:text-3xl font-medium px-2">{obj.name}</h4>

@@ -66,11 +66,10 @@ def run_migrations_online() -> None:
 
     """
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        url=DATABASE_URL,
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-        connect_args={"ssl": {"ca": ssl.get_default_verify_paths().cafile}}
+    config.get_section(config.config_ini_section),
+    url=DATABASE_URL,
+    prefix="sqlalchemy.",
+    poolclass=pool.NullPool
     )
 
     with connectable.connect() as connection:

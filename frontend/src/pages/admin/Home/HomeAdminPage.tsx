@@ -16,49 +16,49 @@ const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
 const navItems: NavItem[] = [
   {
     name: "Famílias",
-    icon: <Boxes size={50} color="white" />,
+    icon: <Boxes className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/familias`,
     description: "Adicionar, Editar ou Apagar Famílias",
   },
   {
     name: "Modelos",
-    icon: <FileBox size={50} color="white" />,
+    icon: <FileBox className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/modelos`,
     description: "Adicionar, Editar ou Apagar Modelos",
   },
   {
     name: "Fabricantes",
-    icon: <Package size={50} color="white" />,
+    icon: <Package className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/fabricantes`,
     description: "Adicionar, Editar ou Apagar Fabricantes",
   },
   {
     name: "Produtos",
-    icon: <PackageOpen size={50} color="white" />,
+    icon: <PackageOpen className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/produtos`,
     description: "Adicionar, Editar ou Apagar Produtos",
   },
   {
     name: "Serviços",
-    icon: <Wrench size={50} color="white" />,
+    icon: <Wrench className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/servicos`,
     description: "Adicionar, Editar ou Apagar Serviços",
   },
   {
     name: "Textos",
-    icon: <Text size={50} color="white" />,
+    icon: <Text className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/textos`,
     description: "Adicionar e Editar Textos",
   },
   {
-    name: "Imagens",
-    icon: <Images size={50} color="white" />,
+    name: "Carrosel",
+    icon: <Images className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/imagens-carrosel`,
     description: "Adicionar, Editar ou Remover Imagens do Carrousel",
   },
   {
     name: "Clients",
-    icon: <User size={50} color="white" />,
+    icon: <User className="h-10 w-10 2xl:w-12 2xl:h-12 text-white" />,
     path: `/${ADMIN_PATH}/clientes`,
     description: "Visualizar Clientes",
   },
@@ -93,9 +93,9 @@ export default function HomeAdminPage() {
                 <div className="flex flex-col 2xl:gap-5 lg:gap-4">
                   <div className="flex gap-3 w-full items-center">
                     {item.icon}
-                    <span className="2xl:text-4xl lg:text-3xl text-white">{item.name}</span>
+                    <span className="2xl:text-3xl text-xl text-white">{item.name}</span>
                   </div>
-                  <p className="text-white text-left">{item.description}</p>
+                  <p className="text-white 2xl:text-base text-sm text-left">{item.description}</p>
                 </div>
               </motion.button>
             ))}

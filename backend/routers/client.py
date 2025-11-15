@@ -12,7 +12,7 @@ router = APIRouter()
 async def get_clients(session: Annotated[AsyncSession, Depends(get_session)]):
     statement = (
         select(Client)
-    )
+    ).order_by(Client.name)
     result = await session.execute(statement=statement)
     clients = result.scalars().all()
 

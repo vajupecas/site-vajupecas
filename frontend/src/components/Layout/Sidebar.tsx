@@ -61,7 +61,6 @@ export default function Sidebar() {
             color="#ff8904"
           />
           <AnimatedLinkDropdownSidebar
-            to="/sobre"
             content={
               <div className="flex items-center gap-2">
                 <CatalogIcon />

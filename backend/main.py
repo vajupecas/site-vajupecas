@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from routers import product_model, products, service, slider, text, admin, auth, producer, product_type, media, client
+from routers import model, products, service, slider, text, admin, auth, producer, product_type, media, client
 from database.db import init_db
 from contextlib import asynccontextmanager
 
@@ -27,10 +27,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/media", StaticFiles(directory="media"), name="media")
-
 app.include_router(products.router)
-app.include_router(product_model.router)
+app.include_router(model.router)
 app.include_router(producer.router)
 app.include_router(product_type.router)
 app.include_router(text.router)

@@ -1,29 +1,23 @@
 import { useState } from "react";
-import type { ProductModelResponseDTO } from "../../../../features/product_model/productModels.model";
+import type { ModelResponseDTO } from "../../../../features/model/models.model";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-interface ProductModelsTableProps {
-  productModels: ProductModelResponseDTO[];
-  setProductModelEdit: Function;
-  setEditProductModelForm: Function;
-  setProductModelRemove: Function;
-  setRemoveProductModelForm: Function;
+interface ModelsTableProps {
+  models: ModelResponseDTO[];
+  setModelEdit: Function;
+  setEditModelForm: Function;
+  setModelRemove: Function;
+  setRemoveModelForm: Function;
 }
 
-export default function ProductModelsTable({
-  productModels,
-  setProductModelEdit,
-  setEditProductModelForm,
-  setProductModelRemove,
-  setRemoveProductModelForm,
-}: ProductModelsTableProps) {
+export default function ModelsTable({ models, setModelEdit, setEditModelForm, setModelRemove, setRemoveModelForm }: ModelsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const maxButtons = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = productModels.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(productModels.length / itemsPerPage);
+  const currentItems = models.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(models.length / itemsPerPage);
 
   const getVisiblePages = (currentPage: number, totalPages: number) => {
     let start = Math.max(currentPage - 1, 1);
@@ -41,14 +35,14 @@ export default function ProductModelsTable({
     return pages;
   };
 
-  function handleEditProductModelForm(productModel: ProductModelResponseDTO) {
-    setProductModelEdit(productModel);
-    setEditProductModelForm(true);
+  function handleEditModelForm(model: ModelResponseDTO) {
+    setModelEdit(model);
+    setEditModelForm(true);
   }
 
-  function handleRemoveProductModelForm(productModel: ProductModelResponseDTO) {
-    setProductModelRemove(productModel);
-    setRemoveProductModelForm(true);
+  function handleRemoveModelForm(model: ModelResponseDTO) {
+    setModelRemove(model);
+    setRemoveModelForm(true);
   }
 
   return (
@@ -57,11 +51,11 @@ export default function ProductModelsTable({
         <table className="w-full max-h-fit text-sm text-left rtl:text-right text-white0 outline-5">
           <thead className="text-xs text-center text-gray-700 uppercase bg-gray-300">
             <tr>
-              <th scope="col" className="px-6 py-3 w-58 border-r-2 border-gray-400">
+              <th scope="col" className="2xl:py-3 py-2 w-58 border-r-2 border-gray-400">
                 Nome
               </th>
-              <th scope="col" className="px-6 py-3 w-58 border-r-2 border-gray-400">
-                Família
+              <th scope="col" className="w-58 border-r-2 border-gray-400">
+                Fabricante
               </th>
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
@@ -73,19 +67,19 @@ export default function ProductModelsTable({
           </thead>
           <tbody>
             {currentItems.map((obj) => (
-              <tr id={`${obj.id}`} className="bg-gray-100 border-b  border-gray-500 hover:bg-gray-50 text-center">
+              <tr id={`${obj.id}`} className="bg-gray-100 border-b  border-gray-500 hover:bg-gray-50 text-center 2xl:text-base text-xs">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border-r-2 border-gray-300">
                   {obj.name}
                 </th>
-                <td className="px-6 py-4 text-gray-700 font-medium border-r-2 border-gray-300">{obj.product_type.name}</td>
+                <td className="px-6 py-4 text-gray-700 font-medium border-r-2 border-gray-300">{obj.producer.name}</td>
                 <td className="px-6 py-4 font-medium text-right ">
-                  <button onClick={() => handleEditProductModelForm(obj)} className="cursor-pointer text-blue-600 hover:underline">
+                  <button onClick={() => handleEditModelForm(obj)} className="cursor-pointer text-blue-600 hover:underline">
                     Editar
                   </button>
                 </td>
                 <td className="px-6 py-4 font-medium text-right">
                   <button
-                    onClick={() => handleRemoveProductModelForm(obj)}
+                    onClick={() => handleRemoveModelForm(obj)}
                     className="cursor-pointer rounded-lg bg-red-500 hover:bg-red-600 text-white px-4 py-2"
                   >
                     Remover
@@ -100,27 +94,27 @@ export default function ProductModelsTable({
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowLeft />
+          <ArrowLeft className="2xl:size-6 size-5" />
         </button>
-
         {getVisiblePages(currentPage, totalPages).map((i) => (
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded ${currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"} cursor-pointer`}
+            className={`2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs rounded ${
+              currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"
+            } cursor-pointer`}
           >
             {i}
           </button>
         ))}
-
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowRight />
+          <ArrowRight className="2xl:size-6 size-5" />
         </button>
       </div>
     </>

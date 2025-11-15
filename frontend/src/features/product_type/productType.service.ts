@@ -1,7 +1,6 @@
 import API from "../../api/axios.ts";
 import type { ProductTypeResponseDTO, ProductTypeBaseDTO, ProductTypeUpdateDTO } from "./productType.model.ts";
 import type { ProducerResponseDTO } from "../producer/producer.model.ts";
-import type { ProductModelResponseDTO } from "../product_model/productModels.model.ts";
 
 export const getProductTypes = async (): Promise<Array<ProductTypeResponseDTO>> => {
   const response = await API.get(`/product-types`);
@@ -28,16 +27,6 @@ export const getProducersByTypeSlug = async (productTypeSlug: string): Promise<A
   return response.data;
 };
 
-export const getProductModelsByTypeId = async (productTypeId: number): Promise<Array<ProductModelResponseDTO>> => {
-  const response = await API.get(`/product-types/${productTypeId}/product-models`);
-  return response.data;
-};
-
-export const getProductModelsByTypeSlug = async (productTypeSlug: string): Promise<Array<ProductModelResponseDTO>> => {
-  const response = await API.get(`/product-types/${productTypeSlug}/product-models`);
-  return response.data;
-};
-
 export const postProductType = async (data: ProductTypeBaseDTO): Promise<ProductTypeResponseDTO> => {
   const response = await API.post(`/product-types`, data);
   return response.data;
@@ -45,6 +34,11 @@ export const postProductType = async (data: ProductTypeBaseDTO): Promise<Product
 
 export const updateProductType = async (productTypeId: number, data: ProductTypeUpdateDTO): Promise<ProductTypeResponseDTO> => {
   const response = await API.put(`product-types/${productTypeId}`, data);
+  return response.data;
+};
+
+export const reorderProductTypes = async (orderedIds: number[]): Promise<{ detail: string }> => {
+  const response = await API.post(`/product-types/reorder`, { ordered_ids: orderedIds });
   return response.data;
 };
 

@@ -10,10 +10,10 @@ interface addProductTypeFormProps {
 export default function addProductTypeForm({ addProductType, setAddProductTypeForm, refreshProductTypes }: addProductTypeFormProps) {
   const [productTypeName, setProductTypeName] = useState("");
   const [productTypeHasProducer, setProductTypeHasProducer] = useState(true);
-  const [productTypeHasProductModel, setProductTypeHasProductModel] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
   async function handleAddProductType() {
-    await addProductType(productTypeName, productTypeHasProducer, productTypeHasProductModel);
+    await addProductType(productTypeName, productTypeHasProducer, file);
     setAddProductTypeForm(false);
     await refreshProductTypes();
   }
@@ -34,31 +34,29 @@ export default function addProductTypeForm({ addProductType, setAddProductTypeFo
               value={productTypeName}
             />
           </div>
-          <div className="flex gap-10 justify-around">
-            <div className="flex flex-row items-center gap-3">
-              <label htmlFor="producer">Tem Fabricantes?</label>
-              <input
-                id="producer"
-                type="checkbox"
-                checked={productTypeHasProducer}
-                onChange={(e) => {
-                  setProductTypeHasProducer(e.target.checked);
-                  setProductTypeHasProductModel(false);
-                }}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
-              />
-            </div>
-            <div className="flex flex-row items-center gap-3">
-              <label htmlFor="model">Tem Modelos?</label>
-              <input
-                id="model"
-                type="checkbox"
-                disabled={!productTypeHasProducer}
-                checked={productTypeHasProductModel}
-                onChange={(e) => setProductTypeHasProductModel(e.target.checked)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
-              />
-            </div>
+          <div className="flex flex-row items-center gap-3">
+            <label htmlFor="producer">Tem Fabricantes?</label>
+            <input
+              id="producer"
+              type="checkbox"
+              checked={productTypeHasProducer}
+              onChange={(e) => {
+                setProductTypeHasProducer(e.target.checked);
+              }}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="" htmlFor="photo_input">
+              Foto (Proporção 9:16)
+            </label>
+            <input
+              className="block cursor-pointer w-full rounded-md bg-gray-50 px-3 py-1.5 text-base text-gray-700 outline-1 -outline-offset-1 outline-gray-200"
+              id="file_input"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+            />
           </div>
           <div className="flex w-full justify-between mt-3">
             <AnimatedButton
@@ -75,7 +73,7 @@ export default function addProductTypeForm({ addProductType, setAddProductTypeFo
               colorHover="#00a63e"
               colorDisabled="#7bf1a8"
               content={"Criar"}
-              disabled={false}
+              disabled={productTypeName === ""}
               onClickFunction={() => handleAddProductType()}
               adicionalStyle="w-24 px-4 py-2 text-white"
             />

@@ -6,14 +6,14 @@ import { getProducers } from "../../../features/producer/producer.service";
 import { uploadFile } from "../../../features/media/media.service";
 import type { ProductTypeSummaryDTO } from "../../../features/product_type/productType.model";
 import { getProductTypes } from "../../../features/product_type/productType.service";
-import type { ProductModelResponseDTO } from "../../../features/product_model/productModels.model";
-import { getProductModels } from "../../../features/product_model/productModels.service";
+import type { ModelResponseDTO } from "../../../features/model/models.model";
+import { getModels } from "../../../features/model/models.service";
 
 export function useProductsPage() {
   const [products, setProducts] = useState<ProductResponseDTO[]>([]);
   const [producers, setProducers] = useState<ProducerResponseDTO[]>([]);
   const [productTypes, setProductTypes] = useState<ProductTypeSummaryDTO[]>([]);
-  const [productModels, setProductModels] = useState<ProductModelResponseDTO[]>([]);
+  const [models, setModels] = useState<ModelResponseDTO[]>([]);
   const [filterSearch, setFilterSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [producerSelected, setProducerSelected] = useState<number | null>(null);
@@ -24,7 +24,7 @@ export function useProductsPage() {
       setProducts(await getProducts());
       setProducers(await getProducers());
       setProductTypes(await getProductTypes());
-      setProductModels(await getProductModels());
+      setModels(await getModels());
       setLoading(false);
     };
     fetchData();
@@ -36,9 +36,9 @@ export function useProductsPage() {
     productName: string,
     productDescription: string,
     file: File,
-    productProductTupe: string,
+    productProductType: string,
     productProducer: string | null = null,
-    productModel: string | null = null
+    model: string | null = null
   ) => {
     const response_image = file ? await uploadFile(file) : { url: "" };
     const url_image = response_image.url;
@@ -47,15 +47,15 @@ export function useProductsPage() {
       name: productName,
       description: productDescription,
       url_image: url_image,
-      product_type_id: Number(productProductTupe),
+      product_type_id: Number(productProductType),
     };
 
     if (productProducer !== "") {
       data.producer_id = Number(productProducer);
     }
 
-    if (productModel !== "") {
-      data.productModel = Number(productProducer);
+    if (model !== "") {
+      data.model_id = Number(model);
     }
 
     return postProduct(data);
@@ -68,7 +68,7 @@ export function useProductsPage() {
     file: File | null = null,
     productProductTupe: string,
     productProducer: string | null = null,
-    productModel: string | null = null
+    model: string | null = null
   ) => {
     const response_image = file ? await uploadFile(file) : { url: "" };
     const url_image = response_image.url;
@@ -83,8 +83,8 @@ export function useProductsPage() {
       data.producer_id = Number(productProducer);
     }
 
-    if (productModel !== "") {
-      data.productModel = Number(productProducer);
+    if (model !== "") {
+      data.model_id = Number(model);
     }
 
     if (url_image !== "") {
@@ -113,7 +113,7 @@ export function useProductsPage() {
     products: filteredProducts,
     producers,
     productTypes,
-    productModels,
+    models,
     loading,
     producerSelected,
     refreshProducts,

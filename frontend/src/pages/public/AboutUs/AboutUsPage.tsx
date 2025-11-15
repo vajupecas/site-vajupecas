@@ -21,7 +21,7 @@ export default function AboutUsPage() {
             <TopBar />
             <MobileNavbar />
             <Navbar />
-            <div className="flex flex-col mt-5 md:mt-20 2xl:w-5/6 gap-10 items-center overflow-hidden">
+            <div className="flex flex-col mt-5 md:mt-20 md:w-7/8 2xl:w-5/6 gap-10 items-center overflow-hidden">
               <div className="flex flex-col gap-10 md:grid md:grid-cols-2 md:grid-rows-1 md:gap-30">
                 <div className="flex flex-col gap-10">
                   <h2 className="text-gray-700 w-fit text-4xl font-semibold relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.75 after:w-full after:bg-orange-400">

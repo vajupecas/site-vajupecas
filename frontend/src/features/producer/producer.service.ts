@@ -1,4 +1,5 @@
 import API from "../../api/axios.ts";
+import type { ModelResponseDTO } from "../model/models.model.ts";
 import type { ProducerResponseDTO, ProducerBaseDTO, ProducerUpdateDTO } from "./producer.model.ts";
 
 export const getProducers = async (): Promise<Array<ProducerResponseDTO>> => {
@@ -13,6 +14,16 @@ export const getProducerById = async (producerId: number): Promise<ProducerRespo
 
 export const postProducer = async (data: ProducerBaseDTO): Promise<ProducerResponseDTO> => {
   const response = await API.post(`/producers`, data);
+  return response.data;
+};
+
+export const getModelsByProducerId = async (producerId: number): Promise<Array<ModelResponseDTO>> => {
+  const response = await API.get(`/producers/${producerId}/models`);
+  return response.data;
+};
+
+export const getModelsByProducerSlug = async (producerSlug: string): Promise<Array<ModelResponseDTO>> => {
+  const response = await API.get(`/producers/${producerSlug}/models`);
   return response.data;
 };
 

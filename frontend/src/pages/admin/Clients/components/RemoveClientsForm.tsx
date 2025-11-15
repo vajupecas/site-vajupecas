@@ -25,7 +25,7 @@ export function RemoveClientForm({ client, removeClient, setClientRemove, setRem
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => cancelRemoveClient()}></div>
-      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute mt-41 w-1/4 h-3/10 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 2xl:px-16 pb-3 absolute 2xl:mt-41 mt-20 xl:w-1/4 lg:w-1/3 2xl:h-3/10 h-fit bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">REMOVER CLIENTE</h3>
         <div className="flex flex-col gap-1 mt-2 font-semibold">
           <p className="text-gray-800 text-center text-lg">Você realmente quer remover o cliente</p>

@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import type { ProducerResponseDTO } from "../../../../features/producer/producer.model";
+import type { ProducerSummaryDTO } from "../../../../features/producer/producer.model";
 import { RotateCcw } from "lucide-react";
 import type { ProductResponseDTO } from "../../../../features/product/product.model";
 import { AnimatedButton } from "../../../../components/UI/AnimatedButton";
 import { AnimatedResetButton } from "../../../../components/UI/AnimatedResetButton";
 import type { ProductTypeSummaryDTO } from "../../../../features/product_type/productType.model";
-import type { ProductModelResponseDTO } from "../../../../features/product_model/productModels.model";
+import type { ModelResponseDTO } from "../../../../features/model/models.model";
 
 interface EditProductFormProps {
   product: ProductResponseDTO | null;
   editProduct: Function;
   setEditProductForm: Function;
   setProductEdit: Function;
-  producers: ProducerResponseDTO[];
+  producers: ProducerSummaryDTO[];
   productTypes: ProductTypeSummaryDTO[];
-  models: ProductModelResponseDTO[];
+  models: ModelResponseDTO[];
   refreshProducts: Function;
 }
 
@@ -30,24 +30,19 @@ export default function EditProductForm({
 }: EditProductFormProps) {
   const [productName, setProductName] = useState(product?.name);
   const [productDescription, setProductDescription] = useState(product?.description);
-  const [productProducer, setProductProducer] = useState(String(product?.producer_id));
-  const [productModel, setProductModel] = useState(String(product?.product_model_id));
+  const [productProducer, setProductProducer] = useState<ProducerSummaryDTO | null>(product?.producer ?? null);
+  const [productModel, setProductModel] = useState(String(product?.model_id));
   const [productProductType, setProductProductType] = useState<ProductTypeSummaryDTO | null>(product?.product_type ?? null);
   const [file, setFile] = useState<File | null>(null);
   const [enableEdit, setEnableEdit] = useState(false);
 
   useEffect(() => {
-    if (
-      productName !== product?.name ||
-      productDescription !== product?.description ||
-      productProducer !== String(product?.producer_id) ||
-      file !== null
-    ) {
+    if (productName !== product?.name || productDescription !== product?.description || productProducer !== product || file !== null) {
       setEnableEdit(true);
     } else {
       setEnableEdit(false);
     }
-  }, [productName, productDescription, productProducer, file]);
+  }, [productName, productDescription, productProducer?.id, file]);
 
   function cancelEditProduct() {
     setEditProductForm(false);
@@ -64,7 +59,7 @@ export default function EditProductForm({
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => cancelEditProduct()}></div>
-      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute w-1/3 2xl:w-1/4 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute 2xl:w-1/4 lg:top-0 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">EDITAR PRODUTO</h3>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
@@ -94,7 +89,7 @@ export default function EditProductForm({
             <textarea
               name="description"
               id="description"
-              className="block w-full min-h-10 h-30 rounded-md bg-gray-50 px-3 py-1.5 text-base text-gray-700 outline-1 -outline-offset-1 outline-gray-200 placeholder:text-white0 focus:outline-2 focus:-outline-offset-2 focus:outline-orange-600 00 sm:text-sm/6"
+              className="block w-full min-h-10 2xl:h-30 rounded-md bg-gray-50 px-3 py-1.5 text-base text-gray-700 outline-1 -outline-offset-1 outline-gray-200 placeholder:text-white0 focus:outline-2 focus:-outline-offset-2 focus:outline-orange-600 00 sm:text-sm/6"
               onChange={(e) => setProductDescription(e.target.value)}
               value={productDescription}
             />
@@ -128,14 +123,17 @@ export default function EditProductForm({
               <p>Fabricante</p>
               <AnimatedResetButton
                 content={<RotateCcw size={14} color="black" />}
-                onClickFunction={() => setProductProducer(String(product?.producer_id))}
+                onClickFunction={() => setProductProducer(product?.producer ?? null)}
               />
             </div>
             <select
               disabled={!productProductType || !productProductType.has_producer}
               className="bg-gray-50 px-3 py-1.5 rounded-lg disabled:bg-gray-100 disabled:text-gray-400"
-              onChange={(e) => setProductProducer(e.target.value)}
-              value={productProducer}
+              onChange={(e) => {
+                const selected = producers.find((obj) => obj.id === Number(e.target.value)) || null;
+                setProductProducer(selected);
+              }}
+              value={productProducer?.id ?? ""}
             >
               <option value="" selected>
                 - Selecionar -
@@ -154,11 +152,11 @@ export default function EditProductForm({
               <p>Modelo</p>
               <AnimatedResetButton
                 content={<RotateCcw size={14} color="black" />}
-                onClickFunction={() => setProductProducer(String(product?.product_model_id))}
+                onClickFunction={() => setProductModel(String(product?.model_id))}
               />
             </div>
             <select
-              disabled={!productProductType || !productProductType.has_product_model}
+              disabled={!productProducer || !productProducer.has_model}
               className="bg-gray-50 px-3 py-1.5 rounded-lg disabled:bg-gray-100 disabled:text-gray-400"
               onChange={(e) => setProductModel(e.target.value)}
               value={productModel}
@@ -167,7 +165,7 @@ export default function EditProductForm({
                 - Selecionar -
               </option>
               {models
-                .filter((obj) => obj.product_type_id == Number(productProductType?.id))
+                .filter((obj) => obj.producer_id == Number(productProducer?.id))
                 .map((obj) => (
                   <option value={`${obj.id}`}>{obj.name}</option>
                 ))}
@@ -176,7 +174,7 @@ export default function EditProductForm({
           <div className="flex flex-col gap-1.5">
             <div className="flex flex-row gap-1.5 items-center">
               <label className="" htmlFor="photo_input">
-                Foto
+                Foto (Proporção 5:4)
               </label>
               <AnimatedResetButton content={<RotateCcw size={14} color="black" />} onClickFunction={() => setFile(null)} />
             </div>

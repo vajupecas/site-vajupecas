@@ -22,7 +22,7 @@ export function AddTextForm({ addText, setAddTextForm, refreshTexts }: AddTextFo
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => setAddTextForm(false)}></div>
-      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute mt-26 w-1/3 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute w-1/3 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">ADICIONAR TEXTO</h3>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
@@ -40,7 +40,7 @@ export function AddTextForm({ addText, setAddTextForm, refreshTexts }: AddTextFo
             <textarea
               name="textText"
               id="textText"
-              className="block w-full rounded-md bg-gray-50 px-3 py-1.5 text-base min-h-10 h-70 text-gray-700 outline-1 -outline-offset-1 outline-gray-200 placeholder:text-white0 focus:outline-2 focus:-outline-offset-2 focus:outline-orange-600 00 sm:text-sm/6"
+              className="block w-full rounded-md bg-gray-50 px-3 py-1.5 text-base min-h-10 lg:h-40 xl:h-70 text-gray-700 outline-1 -outline-offset-1 outline-gray-200 placeholder:text-white0 focus:outline-2 focus:-outline-offset-2 focus:outline-orange-600 00 sm:text-sm/6"
               onChange={(e) => setTextContent(e.target.value)}
               value={textContent}
             />

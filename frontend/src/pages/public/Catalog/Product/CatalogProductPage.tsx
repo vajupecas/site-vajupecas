@@ -25,10 +25,9 @@ function WhatsAppLink(productName: string) {
 }
 
 export default function CatalogProductPage() {
-  const { productTypeSlug, producerSlug, modelSlug, productSlug } = useParams();
+  const { productTypeSlug, producerSlug, productSlug } = useParams();
   const productName = convertSlug(productSlug ?? "");
-  const activeSlug = producerSlug ?? modelSlug;
-  const activeName = convertSlug(activeSlug ?? "Produtos");
+  const activeName = convertSlug(producerSlug ?? "Produtos");
   const productTypeName = convertSlug(productTypeSlug ?? "");
   const navigate = useNavigate();
   const { product, loading } = useCatalogProductPage(productSlug ?? "");
@@ -52,8 +51,6 @@ export default function CatalogProductPage() {
                 let path = `/catalogo/${productTypeSlug}`;
                 if (producerSlug) {
                   path += `/fabricantes`;
-                } else if (modelSlug) {
-                  path += `/modelos`;
                 }
                 navigate(path);
               }}
@@ -66,9 +63,7 @@ export default function CatalogProductPage() {
               onClick={() => {
                 let path = `/catalogo/${productTypeSlug}`;
                 if (producerSlug) {
-                  path += `/fabricantes/${producerSlug}`;
-                } else if (modelSlug) {
-                  path += `/modelos/${modelSlug}`;
+                  path += `/fabricantes/${producerSlug}/produtos`;
                 }
                 navigate(path);
               }}
@@ -98,6 +93,11 @@ export default function CatalogProductPage() {
                     <p className="text-md 2xl:text-lg text-justify">
                       <span className="font-semibold">Fabricante:</span> {product?.producer.name}
                     </p>
+                    {product?.model && (
+                      <p>
+                        <span className="font-semibold">Modelo:</span> {product?.model.name}
+                      </p>
+                    )}
                     <p className="text-md 2xl:text-lg text-justify">
                       <span className="font-semibold">Descrição:</span> {product?.description}
                     </p>

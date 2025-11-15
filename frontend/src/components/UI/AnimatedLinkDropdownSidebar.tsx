@@ -5,7 +5,6 @@ import { AnimatedLink } from "./AnimatedLink";
 import ArrowDownIcon from "../../assets/icons/arrow_down.svg?react";
 
 interface AnimatedLinkDropdownProps {
-  to: string;
   content: React.ReactNode;
   dropdownContent: ProductTypeResponseDTO[];
   color?: string;
@@ -61,6 +60,8 @@ export function AnimatedLinkDropdownSidebar({
                   content={obj.name}
                   to={
                     obj.has_producer
+                      ? `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}/fabricantes`
+                      : obj.name === "Mangueiras Hidráulicas"
                       ? `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}`
                       : `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}/produtos`
                   }

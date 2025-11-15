@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.get("/texts", response_model=list[Text])
 async def get_texts(session: Annotated[AsyncSession, Depends(get_session)]):
-    statement = select(Text)
+    statement = select(Text).order_by(Text.name)
     result = await session.execute(statement=statement)
     texts = result.scalars().all()
 

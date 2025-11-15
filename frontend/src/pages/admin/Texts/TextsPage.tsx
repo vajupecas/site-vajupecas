@@ -38,7 +38,7 @@ export default function TextsPage() {
         <AdminNavbar />
         <div className="flex-1 justify-self-center flex flex-col gap-14 2xl:mt-20 lg:mt-15 mx-12 mb-12 items-center">
           <h2 className="w-full 2xl:text-5xl lg:text-4xl text-center text-orange-500 font-semibold">TEXTOS</h2>
-          <div className="2xl:w-1/2 lg:w-3/5 h-full">
+          <div className="2xl:w-1/2 xl:w-4/6 w-5/6 h-full">
             <div className="flex justify-between">
               <div className="flex gap-8">
                 <AnimatedButton
@@ -55,7 +55,7 @@ export default function TextsPage() {
                     </>
                   }
                   onClickFunction={() => setFilterList((prev) => !prev)}
-                  adicionalStyle="px-4 py-2 text-white"
+                  adicionalStyle="2xl:px-4 2xl:py-2 px-3 py-1.5 text-white 2xl:text-base text-sm"
                 />
                 <AnimatedButton
                   color="#00c950"
@@ -64,7 +64,7 @@ export default function TextsPage() {
                   content={"Adicionar"}
                   disabled={false}
                   onClickFunction={() => setAddTextForm(true)}
-                  adicionalStyle="px-4 py-2 text-white"
+                  adicionalStyle="2xl:px-4 2xl:py-2 px-3 py-1.5 text-white 2xl:text-base text-sm"
                 />
                 {filterList && (
                   <motion.div
@@ -73,7 +73,7 @@ export default function TextsPage() {
                     transition={{ duration: 0.25, ease: "easeOut" }}
                     className="divide-y absolute mt-11 w-fit"
                   >
-                    <ul className="bg-gray-700 rounded-lg w-fit text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto">
+                    <ul className="bg-gray-700 rounded-lg w-fit text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto 2xl:text-base text-xs">
                       {pages.map((obj) => (
                         <>
                           <li key={obj} id={`${obj}`}>
@@ -102,7 +102,7 @@ export default function TextsPage() {
                   name="filter-search"
                   id="filter-search"
                   placeholder="Pesquisar Textos"
-                  className="w-full pl-10 pr-3 py-2 outline-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full 2xl:pl-10 2xl:pr-3 2xl:py-2 2xl:text-base pr-2 py-1.5 pl-9 text-sm outline-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={filterSearch}
                   onChange={(e) => setFilterSearch(e.target.value)}
                 />

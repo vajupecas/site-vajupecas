@@ -23,19 +23,21 @@ export function useProducerPage() {
 
   const refreshProducer = async () => setProducers(await getProducers());
 
-  const addProducer = async (producerName: string, producerProductType: number) => {
+  const addProducer = async (producerName: string, producerProductType: number, producerHasModel: boolean) => {
     const data = {
       name: producerName,
       product_type_id: producerProductType,
+      has_model: producerHasModel,
     };
 
     return postProducer(data);
   };
 
-  const editProducer = async (producerId: number, producerName: string, producerProductType: number) => {
+  const editProducer = async (producerId: number, producerName: string, producerProductType: number, producerHasModel: boolean) => {
     const data = {
       name: producerName,
       product_type_id: producerProductType,
+      has_model: producerHasModel,
     };
 
     return updateProducer(producerId, data);

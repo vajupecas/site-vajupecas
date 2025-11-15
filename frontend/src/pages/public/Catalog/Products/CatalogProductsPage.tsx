@@ -30,16 +30,14 @@ function WhatsAppLink(productName: string) {
 
 export default function CatalogProductsPage() {
   const [filterList, setFilterList] = useState(false);
-  const { productTypeSlug, producerSlug, modelSlug } = useParams();
+  const { productTypeSlug, producerSlug } = useParams();
   const navigate = useNavigate();
 
-  const activeSlug = producerSlug ?? modelSlug;
-  const activeName = convertSlug(activeSlug ?? "Produtos");
+  const activeName = convertSlug(producerSlug ?? "Produtos");
   const productTypeName = convertSlug(productTypeSlug ?? "");
-  const { products, producers, producerSelected, loading, filterSearch, filterByProducer, setFilterSearch } = useCatalogProductsPage({
+  const { products, models, modelSelected, loading, filterSearch, filterByModel, setFilterSearch } = useCatalogProductsPage({
     productTypeSlug: productTypeSlug ?? "",
     producerSlug: producerSlug,
-    modelSlug: modelSlug,
   });
 
   return (
@@ -59,10 +57,9 @@ export default function CatalogProductsPage() {
               <span className="text-orange-400 font-medium cursor-default">/</span>
               <span
                 onClick={() => {
-                  if (modelSlug) navigate(`/catalogo/${productTypeSlug}/modelos`);
-                  else if (producerSlug) navigate(`/catalogo/${productTypeSlug}/fabricantes`);
+                  if (producerSlug) navigate(`/catalogo/${productTypeSlug}/fabricantes`);
                 }}
-                className={activeSlug ? "cursor-pointer" : ""}
+                className={producerSlug ? "cursor-pointer" : ""}
               >
                 {productTypeName}
               </span>
@@ -76,7 +73,7 @@ export default function CatalogProductsPage() {
                 {activeName}
               </h2>
               <div className="flex flex-row gap-2 md:gap-10">
-                {producers.length != 0 && (
+                {models.length != 0 && (
                   <AnimatedButton
                     color="#6a7282"
                     colorHover="#4a5565"
@@ -89,12 +86,12 @@ export default function CatalogProductsPage() {
                         </svg>
                       </>
                     }
-                    disabled={producers.length === 0}
+                    disabled={models.length === 0}
                     onClickFunction={() => setFilterList((prev) => !prev)}
-                    adicionalStyle="text-[12px] w-fit md:w-full md:text-base px-4 py-2 text-white"
+                    adicionalStyle="text-[12px] w-fit md:text-base px-4 py-2 text-white"
                   />
                 )}
-                {filterList && producers.length != 0 && (
+                {filterList && models.length != 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={products ? { opacity: 1, y: 0 } : {}}
@@ -102,7 +99,7 @@ export default function CatalogProductsPage() {
                     className="divide-y absolute mt-11 w-fit"
                   >
                     <ul className="bg-gray-700 rounded-lg text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto">
-                      {producers.map((obj) => (
+                      {models.map((obj) => (
                         <li key={obj.id} id={`${obj.id}`}>
                           <div className="flex gap-2 items-center rounded-lg px-1 py-1 hover:bg-gray-600">
                             <input
@@ -110,8 +107,8 @@ export default function CatalogProductsPage() {
                               type="checkbox"
                               name="filter"
                               value={obj.id}
-                              checked={producerSelected === obj.id}
-                              onChange={() => filterByProducer(obj.id)}
+                              checked={modelSelected === obj.id}
+                              onChange={() => filterByModel(obj.id)}
                             />
                             <label htmlFor={`${obj.id}`}>{obj.name}</label>
                           </div>

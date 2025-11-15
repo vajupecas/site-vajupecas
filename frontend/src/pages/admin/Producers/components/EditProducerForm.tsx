@@ -24,15 +24,16 @@ export default function EditProducerForm({
 }: EditProducerFormProps) {
   const [producerName, setProducerName] = useState(producer?.name);
   const [producerProductType, setProducerProductType] = useState(String(producer?.product_type_id));
+  const [producerHasModel, setProducerHasModel] = useState(producer?.has_model);
   const [enableEdit, setEnableEdit] = useState(false);
 
   useEffect(() => {
-    if (producerName !== producer?.name || producerProductType !== String(producer?.product_type_id)) {
+    if (producerName !== producer?.name || producerProductType !== String(producer?.product_type_id || producerHasModel !== producer?.has_model)) {
       setEnableEdit(true);
     } else {
       setEnableEdit(false);
     }
-  }, [producerName, producerProductType]);
+  }, [producerName, producerHasModel, producerProductType]);
 
   function cancelEditProducer() {
     setEditProducerForm(false);
@@ -40,7 +41,7 @@ export default function EditProducerForm({
   }
 
   async function handleEditProducer() {
-    await editProducer(producer?.id, producerName, producerProductType);
+    await editProducer(producer?.id, producerName, producerProductType, producerHasModel);
     setProducerEdit(null);
     setEditProducerForm(false);
     await refreshProducer();
@@ -49,7 +50,7 @@ export default function EditProducerForm({
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => cancelEditProducer()}></div>
-      <div className="z-50 flex flex-col gap-6  px-16 pb-3 absolute mt-26 w-1/4 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute 2xl:w-1/4 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">EDITAR FABRICANTE</h3>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
@@ -88,6 +89,19 @@ export default function EditProducerForm({
                 <option value={`${obj.id}`}>{obj.name}</option>
               ))}
             </select>
+          </div>
+          <div className="flex flex-row items-center gap-3">
+            <div className="flex flex-row gap-1.5 items-center">
+              <label htmlFor="model">Tem Modelos?</label>
+              <AnimatedResetButton content={<RotateCcw size={14} color="black" />} onClickFunction={() => setProducerHasModel(producer?.has_model)} />
+            </div>
+            <input
+              id="model"
+              type="checkbox"
+              checked={producerHasModel}
+              onChange={(e) => setProducerHasModel(e.target.checked)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
+            />
           </div>
           <div className="flex w-full justify-between mt-3">
             <AnimatedButton

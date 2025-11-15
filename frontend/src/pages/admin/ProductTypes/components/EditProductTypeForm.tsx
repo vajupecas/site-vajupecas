@@ -21,7 +21,7 @@ export function EditProductTypeForm({
 }: EditProductTypeFormProps) {
   const [productTypeName, setProductTypeName] = useState(productType?.name);
   const [productTypeHasProducer, setProductTypeHasProducer] = useState(productType?.has_producer);
-  const [productTypeHasProductModel, setProductTypeHasProductModel] = useState(productType?.has_product_model);
+  const [file, setFile] = useState<File | null>(null);
 
   function cancelEditProductType() {
     setProductTypeEdit(null);
@@ -29,7 +29,7 @@ export function EditProductTypeForm({
   }
 
   async function handleEditProductType() {
-    await editProductType(productType?.id, productTypeName, productTypeHasProducer);
+    await editProductType(productType?.id, productTypeName, file, productTypeHasProducer);
     setEditProductTypeForm(false);
     await refreshProductTypes();
   }
@@ -56,43 +56,38 @@ export function EditProductTypeForm({
               value={productTypeName}
             />
           </div>
-          <div className="flex gap-10 justify-around">
-            <div className="flex flex-row items-center gap-3">
-              <div className="flex flex-row gap-1.5 items-center">
-                <label htmlFor="producer">Tem Fabricantes?</label>
-                <AnimatedResetButton
-                  content={<RotateCcw size={14} color="black" />}
-                  onClickFunction={() => setProductTypeHasProducer(productType?.has_producer)}
-                />
-              </div>
-              <input
-                id="producer"
-                type="checkbox"
-                checked={productTypeHasProducer}
-                onChange={(e) => {
-                  setProductTypeHasProducer(e.target.checked);
-                  setProductTypeHasProductModel(false);
-                }}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
+          <div className="flex flex-row items-center gap-3">
+            <div className="flex flex-row gap-1.5">
+              <label htmlFor="producer">Tem Fabricantes?</label>
+              <AnimatedResetButton
+                content={<RotateCcw size={14} color="black" />}
+                onClickFunction={() => setProductTypeHasProducer(productType?.has_producer)}
               />
             </div>
-            <div className="flex flex-row items-center gap-3">
-              <div className="flex flex-row gap-1.5 items-center">
-                <label htmlFor="model">Tem Modelos?</label>
-                <AnimatedResetButton
-                  content={<RotateCcw size={14} color="black" />}
-                  onClickFunction={() => setProductTypeHasProductModel(productType?.has_product_model)}
-                />
-              </div>
-              <input
-                id="model"
-                type="checkbox"
-                disabled={!productTypeHasProducer}
-                checked={productTypeHasProductModel}
-                onChange={(e) => setProductTypeHasProductModel(e.target.checked)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
-              />
+            <input
+              id="producer"
+              type="checkbox"
+              checked={productTypeHasProducer}
+              onChange={(e) => {
+                setProductTypeHasProducer(e.target.checked);
+              }}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex flex-row gap-1.5 items-center">
+              <label className="" htmlFor="photo_input">
+                Foto (Proporção 9:16)
+              </label>
+              <AnimatedResetButton content={<RotateCcw size={14} color="black" />} onClickFunction={() => setFile(null)} />
             </div>
+            <input
+              className="block cursor-pointer w-full rounded-md bg-gray-50 px-3 py-1.5 text-base text-gray-700 outline-1 -outline-offset-1 outline-gray-200"
+              id="file_input"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+            />
           </div>
           <div className="flex w-full justify-between mt-3">
             <AnimatedButton
@@ -109,7 +104,7 @@ export function EditProductTypeForm({
               colorHover="#00a63e"
               colorDisabled="#7bf1a8"
               content={"Confirmar"}
-              disabled={productType?.name === productTypeName && productType?.has_producer === productTypeHasProducer}
+              disabled={productType?.name === productTypeName && productType?.has_producer === productTypeHasProducer && file === null}
               onClickFunction={() => handleEditProductType()}
               adicionalStyle="w-24 px-4 py-2 text-white"
             />

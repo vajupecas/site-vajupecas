@@ -14,12 +14,12 @@ const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
 const navItems: NavItem[] = [
   { name: "Home", icon: <Home className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/home` },
   { name: "Famílias", icon: <Boxes className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/familias` },
-  { name: "Modelos", icon: <FileBox className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/modelos` },
   { name: "Fabricantes", icon: <Package className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/fabricantes` },
+  { name: "Modelos", icon: <FileBox className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/modelos` },
   { name: "Produtos", icon: <PackageOpen className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/produtos` },
   { name: "Serviços", icon: <Wrench className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/servicos` },
   { name: "Textos", icon: <Text className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/textos` },
-  { name: "Imagens", icon: <Images className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/imagens-carrosel` },
+  { name: "Carrosel", icon: <Images className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/imagens-carrosel` },
   { name: "Clientes", icon: <User className="2xl:w-5 lg:w-4" />, path: `/${ADMIN_PATH}/clientes` },
 ];
 

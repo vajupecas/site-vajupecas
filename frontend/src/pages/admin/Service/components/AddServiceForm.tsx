@@ -21,7 +21,7 @@ export function AddServiceForm({ addService, setAddServiceForm, refreshServices 
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => setAddServiceForm(false)}></div>
-      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute mt-26 w-1/3 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute 2xl:w-1/4 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">ADICIONAR SERVIÇO</h3>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1.5">

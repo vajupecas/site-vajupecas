@@ -12,6 +12,7 @@ interface AddProducerFormProps {
 export default function AddProducerForm({ addProducer, productTypes, setAddProducerForm, refreshProducer }: AddProducerFormProps) {
   const [infos, setInfos] = useState(false);
   const [producerName, setProducerName] = useState("");
+  const [producerHasModel, setProducerHasModel] = useState(false);
   const [producerProductType, setProducerProductType] = useState("");
 
   useEffect(() => {
@@ -20,10 +21,10 @@ export default function AddProducerForm({ addProducer, productTypes, setAddProdu
     } else {
       setInfos(false);
     }
-  }, [producerName, producerProductType]);
+  }, [producerName, producerHasModel, producerProductType]);
 
   async function handleAddProducer() {
-    await addProducer(producerName, producerProductType);
+    await addProducer(producerName, producerProductType, producerHasModel);
     setAddProducerForm(false);
     await refreshProducer();
   }
@@ -31,7 +32,7 @@ export default function AddProducerForm({ addProducer, productTypes, setAddProdu
   return (
     <>
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => setAddProducerForm(false)}></div>
-      <div className="z-50 flex flex-col gap-6 absolute mt-26 px-16 pb-3 w-1/4 bg-gray-200 rounded-lg shadow-lg">
+      <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute 2xl:w-1/4 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">ADICIONAR FABRICANTE</h3>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
@@ -58,6 +59,16 @@ export default function AddProducerForm({ addProducer, productTypes, setAddProdu
                 <option value={`${obj.id}`}>{obj.name}</option>
               ))}
             </select>
+          </div>
+          <div className="flex flex-row items-center gap-3">
+            <label htmlFor="model">Tem Modelos?</label>
+            <input
+              id="model"
+              type="checkbox"
+              checked={producerHasModel}
+              onChange={(e) => setProducerHasModel(e.target.checked)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
+            />
           </div>
           <div className="flex w-full justify-between mt-3">
             <AnimatedButton

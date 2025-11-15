@@ -57,23 +57,23 @@ export function ClientsTable({ clients, setClientRemove, setRemoveClientForm }: 
         <table className="w-full max-h-fit text-sm text-center text-white0 outline-5 ">
           <thead className="text-xs text-gray-700 uppercase bg-gray-300">
             <tr>
-              <th scope="col" className="px-4 py-3 w-60 border-r-2 border-gray-400">
+              <th scope="col" className="2xl:px-4 2xl:py-3 py-2 w-60 border-r-2 border-gray-400">
                 Nome
               </th>
-              <th scope="col" className="px-2 py-3 w-50 border-r-2 border-gray-400">
+              <th scope="col" className="w-50 border-r-2 border-gray-400">
                 Email
               </th>
-              <th scope="col" className="px-2 py-3 w-50 border-r-2 border-gray-400">
+              <th scope="col" className=" w-50 border-r-2 border-gray-400">
                 Telefone
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6">
                 <span className="sr-only">Remove</span>
               </th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((obj) => (
-              <tr className="bg-gray-100 border-b border-gray-500 hover:bg-gray-50">
+              <tr className="bg-gray-100 border-b border-gray-500 hover:bg-gray-50 2xl:text-base text-xs">
                 <th scope="row" className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap border-r-2 border-gray-300">
                   {obj.name}
                 </th>
@@ -99,27 +99,27 @@ export function ClientsTable({ clients, setClientRemove, setRemoveClientForm }: 
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowLeft />
+          <ArrowLeft className="2xl:size-6 size-5" />
         </button>
-
         {getVisiblePages(currentPage, totalPages).map((i) => (
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded ${currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"} cursor-pointer`}
+            className={`2xl:px-3 2xl:py-1 px-2.5 2xl:text-base text-xs rounded ${
+              currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"
+            } cursor-pointer`}
           >
             {i}
           </button>
         ))}
-
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowRight />
+          <ArrowRight className="2xl:size-6 size-5" />
         </button>
       </div>
     </>

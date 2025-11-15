@@ -26,7 +26,7 @@ export default function ServicesPage() {
           <MobileNavbar />
           <Navbar />
         </div>
-        <div className="flex flex-col mt-5 md:mt-10 h-full w-6/7 md:w-3/5 mb-20">
+        <div className="flex flex-col mt-5 md:mt-10 h-full w-6/7 md:w-4/5 2xl:3/5 mb-20">
           {loading && <Loader />}
           {!loading && (
             <>
@@ -60,7 +60,7 @@ export default function ServicesPage() {
                       </div>
                     </div>
 
-                    <div className="w-60 md:w-74 aspect-[4/5] overflow-hidden rounded-lg shadow-md">
+                    <div className="w-60 md:w-68 xl:74 aspect-[4/5] overflow-hidden rounded-lg shadow-md">
                       <img src={obj.url_image} alt={obj.name} className="w-full h-full object-cover object-center" />
                     </div>
                   </div>

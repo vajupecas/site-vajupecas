@@ -22,9 +22,9 @@ import ContactPage from "./pages/public/Contact/ContactPage.tsx";
 import SliderImagePage from "./pages/admin/Slider/SliderPage.tsx";
 import ServicePage from "./pages/admin/Service/ServicePage.tsx";
 import ServicesPage from "./pages/public/Services/ServicesPage.tsx";
-import ProductModelsPage from "./pages/admin/ProductModels/ProductModelPage.tsx";
-import CatalogModelsPage from "./pages/public/Catalog/Models/CatalogModelsPage.tsx";
+import ModelsPage from "./pages/admin/Models/ModelPage.tsx";
 import ClientsPage from "./pages/admin/Clients/ClientsPage.tsx";
+import HydraulicHosePage from "./pages/public/HydraulicHose/HydraulicHosePage.tsx";
 
 const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
 
@@ -56,31 +56,23 @@ const router = createBrowserRouter([
         element: <ForgetPassword />,
       },
       {
-        path: `/catalogo/:productTypeSlug/fabricantes`,
-        element: <CatalogProducersPage />,
+        path: `/catalogo/mangueiras-hidráulicas`,
+        element: <HydraulicHosePage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/modelos`,
-        element: <CatalogModelsPage />,
+        path: `/catalogo/:productTypeSlug/fabricantes`,
+        element: <CatalogProducersPage />,
       },
       {
         path: `/catalogo/:productTypeSlug/produtos`,
         element: <CatalogProductsPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug`,
+        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug/produtos`,
         element: <CatalogProductsPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/modelos/:modelSlug`,
-        element: <CatalogProductsPage />,
-      },
-      {
-        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug/:productSlug`,
-        element: <CatalogProductPage />,
-      },
-      {
-        path: `/catalogo/:productTypeSlug/modelos/:modelSlug/:productSlug`,
+        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug/produtos/:productSlug`,
         element: <CatalogProductPage />,
       },
       {
@@ -123,7 +115,7 @@ const router = createBrowserRouter([
         path: `/${ADMIN_PATH}/modelos`,
         element: (
           <PrivateRoute>
-            <ProductModelsPage />
+            <ModelsPage />
           </PrivateRoute>
         ),
       },

@@ -4,13 +4,13 @@ from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database.db import get_session
 from models.service import Service, ServiceBase, ServiceUpdate
-from routers.media import deleteFile
+from routers.b2_service import delete_from_b2
 
 router = APIRouter()
 
 @router.get("/services", response_model=list[Service])
 async def get_services(session: Annotated[AsyncSession, Depends(get_session)]):
-    statement = select(Service)
+    statement = select(Service).order_by(Service.name)
     result = await session.execute(statement=statement)
     services = result.scalars().all()
 
@@ -18,7 +18,7 @@ async def get_services(session: Annotated[AsyncSession, Depends(get_session)]):
 
 @router.get("/services/{page}", response_model=list[Service])
 async def get_services_by_page(page: str, session: Annotated[AsyncSession, Depends(get_session)]):
-    statement = select(Service).where(Service.page == page)
+    statement = select(Service).where(Service.page == page).order_by(Service.name)
     result = await session.execute(statement=statement)
     services = result.scalars().all()
 
@@ -55,7 +55,7 @@ async def post_service(data: ServiceBase, session: Annotated[AsyncSession, Depen
     return service
 
 @router.put("/services/{service_id}", response_model=Service)
-async def update_service(request: Request, service_id: int, data: ServiceUpdate, session: Annotated[AsyncSession, Depends(get_session)]):
+async def update_service(service_id: int, data: ServiceUpdate, session: Annotated[AsyncSession, Depends(get_session)]):
     service = await session.get(Service, service_id)
 
     if not service:
@@ -63,8 +63,9 @@ async def update_service(request: Request, service_id: int, data: ServiceUpdate,
     
     filtered_data = data.model_dump(exclude_unset=True)
 
-    if "url_image" in filtered_data.keys():
-        await deleteFile(request, service.url_image)
+    if "url_image" in filtered_data:
+        old_key = service.url_image.split("/")[-1]
+        delete_from_b2(old_key)
 
     for key, value in filtered_data.items():
         setattr(service, key, value)
@@ -76,14 +77,14 @@ async def update_service(request: Request, service_id: int, data: ServiceUpdate,
     return service
 
 @router.delete("/services/{service_id}", status_code=204)
-async def delete_service(request: Request, service_id: int, session: Annotated[AsyncSession, Depends(get_session)]):
+async def delete_service(service_id: int, session: Annotated[AsyncSession, Depends(get_session)]):
     service = session.get(Service, service_id)
 
     if not service:
         raise HTTPException(status_code=404, detail="Serviço não encontrado ou cadastrado")
     
-    if service.url_image:
-        await deleteFile(request, service.url_image)
+    old_key = service.url_image.split("/")[-1]
+    delete_from_b2(old_key)
     
     await session.delete(service)
     await session.commit()

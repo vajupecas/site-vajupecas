@@ -55,6 +55,8 @@ export function AnimatedLinkDropdownNavbar({ content, dropdownContent, color = "
                   content={obj.name}
                   to={
                     obj.has_producer
+                      ? `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}/fabricantes`
+                      : obj.name === "Mangueiras Hidráulicas"
                       ? `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}`
                       : `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}/produtos`
                   }

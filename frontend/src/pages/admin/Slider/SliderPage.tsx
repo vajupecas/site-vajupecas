@@ -36,8 +36,8 @@ export default function SliderImagePage() {
       <div className="h-screen w-screen flex">
         <AdminNavbar />
         <div className="flex-1 justify-self-center flex flex-col gap-14 2xl:mt-20 lg:mt-15 mx-12 mb-12 items-center">
-          <h2 className="w-full 2xl:text-5xl lg:text-4xl text-center text-orange-500 font-semibold">IMAGENS CARROUSEL</h2>
-          <div className="2xl:w-1/2 lg:w-3/5 h-full">
+          <h2 className="w-full 2xl:text-5xl lg:text-4xl text-center text-orange-500 font-semibold">IMAGENS CARROSEL</h2>
+          <div className="2xl:w-1/2 xl:w-4/6 w-5/6 h-full">
             <div className="flex justify-between">
               <div className="flex gap-8">
                 <AnimatedButton
@@ -47,7 +47,7 @@ export default function SliderImagePage() {
                   content={"Adicionar"}
                   disabled={false}
                   onClickFunction={() => setAddSliderImageForm(true)}
-                  adicionalStyle="px-4 py-2 text-white"
+                  adicionalStyle="2xl:px-4 2xl:py-2 px-3 text-white 2xl:text-base text-sm"
                 />
               </div>
               <div className="relative flex items-center">
@@ -57,7 +57,7 @@ export default function SliderImagePage() {
                   name="filter-search"
                   id="filter-search"
                   placeholder="Pesquisar Imagens"
-                  className="w-full pl-10 pr-3 py-2 outline-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full 2xl:pl-10 2xl:pr-3 2xl:py-2 2xl:text-base pr-2 py-1.5 pl-9 text-sm outline-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={filterSearch}
                   onChange={(e) => setFilterSearch(e.target.value)}
                 />

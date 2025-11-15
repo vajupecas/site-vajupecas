@@ -3,6 +3,9 @@ module.exports = {
   content: ["./*.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      textShadow: {
+        stroke: "2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #ff8904",
+      },
       keyframes: {
         "moveBox-1": {
           "9.09%": { transform: "translate(-26px, 0)" },
@@ -135,5 +138,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-textshadow")],
 };

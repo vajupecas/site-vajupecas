@@ -48,10 +48,11 @@ export function Footer() {
                   color="white"
                   content={
                     <p className="text-[10px] md:text-xs 2xl:text-base flex gap-2 items-center">
-                      <InstagramIcon /> @instagram
+                      <InstagramIcon /> @vaju_pecas
                     </p>
                   }
-                  to="#"
+                  to="https://www.instagram.com/vaju_pecas/"
+                  target="blank"
                 />
                 <AnimatedLink
                   color="white"
@@ -60,7 +61,8 @@ export function Footer() {
                       <FacebookIcon /> facebook
                     </p>
                   }
-                  to="#"
+                  to="https://www.facebook.com/p/Vaju-Pe%C3%A7as-de-Bombas-e-Betoneiras-100037942788609/"
+                  target="blank"
                 />
                 <AnimatedLink
                   color="white"
@@ -69,7 +71,8 @@ export function Footer() {
                       <LinkedinIcon /> linkedin
                     </p>
                   }
-                  to="#"
+                  to="https://www.linkedin.com/in/valdecir-geovani-arend-7598b760/"
+                  target="blank"
                 />
               </div>
             </div>

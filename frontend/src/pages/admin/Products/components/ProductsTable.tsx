@@ -20,7 +20,7 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
   const totalPages = Math.ceil((products ?? []).length / itemsPerPage);
 
   const getVisiblePages = (currentPage: number, totalPages: number) => {
-    let start = Math.max(currentPage - 1, 1); // começa em 1
+    let start = Math.max(currentPage - 1, 1);
     let end = start + maxButtons - 1;
 
     if (end > totalPages) {
@@ -81,7 +81,7 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
                   {obj.producer_id ? obj.producer.name : "Não possui"}
                 </td>
                 <td className="px-6 py-4  text-center text-gray-900 font-medium border-r-2 border-gray-300">
-                  {obj.product_model_id ? obj.product_model.name : "Não possui"}
+                  {obj.model_id ? obj.model.name : "Não possui"}
                 </td>
                 <td
                   className="cursor-pointer px-6 py-4 truncate text-center text-gray-900 font-medium border-r-2 border-gray-300"
@@ -111,15 +111,17 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowLeft />
+          <ArrowLeft className="2xl:size-6 size-5" />
         </button>
         {getVisiblePages(currentPage, totalPages).map((i) => (
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded ${currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"} cursor-pointer`}
+            className={`2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs rounded ${
+              currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"
+            } cursor-pointer`}
           >
             {i}
           </button>
@@ -127,9 +129,9 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
+          className="2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs bg-gray-200 rounded disabled:opacity-50 cursor-pointer disabled:cursor-default"
         >
-          <ArrowRight />
+          <ArrowRight className="2xl:size-6 size-5" />
         </button>
       </div>
     </>

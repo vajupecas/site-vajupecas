@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import type { ProductTypeResponseDTO } from "../../../features/product_type/productType.model";
-import { deleteProductType, getProductTypes, postProductType, updateProductType } from "../../../features/product_type/productType.service";
+import {
+  deleteProductType,
+  getProductTypes,
+  postProductType,
+  reorderProductTypes,
+  updateProductType,
+} from "../../../features/product_type/productType.service";
+import { uploadFile } from "../../../features/media/media.service";
 
 export function useProductTypePage() {
   const [productTypes, setProductTypes] = useState<ProductTypeResponseDTO[]>([]);
@@ -19,33 +26,46 @@ export function useProductTypePage() {
 
   const refreshProductTypes = async () => setProductTypes(await getProductTypes());
 
-  const addProductType = async (productTypeName: string, producTypeHasProcucer: boolean, productTyoeHasProductModel: boolean) => {
+  const addProductType = async (productTypeName: string, producTypeHasProcucer: boolean, file: File) => {
+    const response_image = file ? await uploadFile(file) : { url: "" };
+    const url_image = response_image.url;
+
     const data = {
       name: productTypeName,
       has_producer: producTypeHasProcucer,
-      has_product_model: productTyoeHasProductModel,
+      url_image: url_image,
     };
 
     return postProductType(data);
   };
 
-  const editProductType = async (
-    productTypeId: number,
-    productTypeName: string,
-    producTypeHasProcucer: boolean,
-    productTyoeHasProductModel: boolean
-  ) => {
-    const data = {
+  const editProductType = async (productTypeId: number, productTypeName: string, file: File | null = null, producTypeHasProcucer: boolean) => {
+    const response_image = file ? await uploadFile(file) : { url: "" };
+    const url_image = response_image.url;
+
+    const data: any = {
       name: productTypeName,
       has_producer: producTypeHasProcucer,
-      has_product_model: productTyoeHasProductModel,
     };
+
+    if (url_image !== "") {
+      data.url_image = url_image;
+    }
 
     return updateProductType(productTypeId, data);
   };
 
   const removeProductType = async (productTypeId: number) => {
     return deleteProductType(productTypeId);
+  };
+
+  const reorderTypes = async (orderedIds: number[]) => {
+    try {
+      await reorderProductTypes(orderedIds);
+      await refreshProductTypes();
+    } catch (error) {
+      console.error("Falha ao reordenar tipos de produto:", error);
+    }
   };
 
   const filteredProductTypes = filterSearch
@@ -59,6 +79,7 @@ export function useProductTypePage() {
     addProductType,
     editProductType,
     removeProductType,
+    reorderTypes,
     filterSearch,
     setFilterSearch,
   };

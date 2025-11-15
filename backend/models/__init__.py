@@ -1,5 +1,5 @@
 from models.client import Client
-from models.product_model import ProductModel, ProductModelResponse, ProductModelSummary
+from models.model import Model, ModelResponse, ModelSummary
 from models.slider import SliderImage
 from models.product_type import ProductType, ProductTypeResponse, ProductTypeSummary
 from models.producer import Producer, ProducerResponse, ProducerSummary
@@ -14,9 +14,9 @@ ProductTypeSummary.model_rebuild()
 Producer.model_rebuild()
 ProducerResponse.model_rebuild()
 ProducerSummary.model_rebuild()
-ProductModel.model_rebuild()
-ProductModelSummary.model_rebuild()
-ProductModelResponse.model_rebuild()
+Model.model_rebuild()
+ModelSummary.model_rebuild()
+ModelResponse.model_rebuild()
 Product.model_rebuild()
 ProductSummary.model_rebuild()
 ProductResponse.model_rebuild()

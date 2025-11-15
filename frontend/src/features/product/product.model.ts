@@ -1,5 +1,5 @@
 import type { Producer, ProducerSummaryDTO } from "../producer/producer.model";
-import type { ProductModel, ProductModelSummaryDTO } from "../product_model/productModels.model";
+import type { Model, ModelSummaryDTO } from "../model/models.model";
 import type { ProductType, ProductTypeSummaryDTO } from "../product_type/productType.model";
 
 export interface Product {
@@ -11,8 +11,8 @@ export interface Product {
   product_type: ProductType;
   producer_id: number;
   producer: Producer;
-  product_model_id: number;
-  product_model: ProductModel;
+  model_id: number;
+  model: Model;
 }
 
 export interface ProductResponseDTO {
@@ -24,8 +24,8 @@ export interface ProductResponseDTO {
   product_type: ProductTypeSummaryDTO;
   producer_id: number;
   producer: ProducerSummaryDTO;
-  product_model_id: number;
-  product_model: ProductModelSummaryDTO;
+  model_id: number;
+  model: ModelSummaryDTO;
 }
 
 export interface ProductBaseDTO {
@@ -34,7 +34,7 @@ export interface ProductBaseDTO {
   url_image: string;
   product_type_id: number;
   producer_id?: number;
-  product_model_id?: number;
+  model_id?: number;
 }
 
 export interface ProductSummaryDTO {
@@ -43,7 +43,7 @@ export interface ProductSummaryDTO {
   url_image: string;
   product_type_id: number;
   producer_id: number;
-  product_model_id: number;
+  model_id: number;
 }
 
 export interface ProductUpdateDTO {
@@ -52,5 +52,5 @@ export interface ProductUpdateDTO {
   url_image?: string;
   product_type_id?: number;
   producer_id?: number;
-  product_model_id?: number;
+  model_id?: number;
 }
