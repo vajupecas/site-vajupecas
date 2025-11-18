@@ -50,7 +50,7 @@ export default function CatalogProductsPage() {
         </div>
         <div className="flex flex-col mt-5 mb-20 md:mb-0 h-full w-4/5 md:w-3/4">
           <div className="flex flex-col gap-3 md:gap-5">
-            <div className="flex gap-2 text-sm 2xl:text-base text-gray-800">
+            <div className="flex gap-2 text-sm md:text-xs 2xl:text-base text-gray-800">
               <span onClick={() => navigate("/")} className="cursor-pointer">
                 Home
               </span>
@@ -69,7 +69,7 @@ export default function CatalogProductsPage() {
               </span>
             </div>
             <div className="w-full flex flex-col md:flex-row gap-5 justify-between md:items-center justify-self-center">
-              <h2 className="text-gray-700 w-fit text-2xl md:text-3xl 2xl:text-5xl relative font-medium after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-0.75 after:w-full after:bg-orange-400">
+              <h2 className="text-gray-700 w-fit text-2xl md:text-4xl 2xl:text-5xl relative font-medium after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-0.75 after:w-full after:bg-orange-400">
                 {activeName}
               </h2>
               <div className="flex flex-row gap-2 md:gap-10">
@@ -88,7 +88,7 @@ export default function CatalogProductsPage() {
                     }
                     disabled={models.length === 0}
                     onClickFunction={() => setFilterList((prev) => !prev)}
-                    adicionalStyle="text-[12px] w-fit md:text-base px-4 py-2 text-white"
+                    adicionalStyle="2xl:px-4 2xl:py-2 px-3 py-1.5 text-white 2xl:text-base text-sm"
                   />
                 )}
                 {filterList && models.length != 0 && (
@@ -135,7 +135,7 @@ export default function CatalogProductsPage() {
           {loading && <Loader />}
           {!loading && (
             <>
-              <div className={`mt-10 2xl:mt-15 w-full flex flex-col gap-6 md:grid md:gap-4 sm:grid-cols-3 md:grid-cols-4`}>
+              <div className={`mt-10 2xl:mt-15 w-4/5 self-center md:w-full flex flex-col gap-6 md:grid md:gap-4 sm:grid-cols-3 md:grid-cols-4`}>
                 {products.map((obj) => (
                   <motion.div
                     className="bg-white cursor-pointer outline-1 outline-gray-300 w-full h-fit rounded-lg"
@@ -143,15 +143,18 @@ export default function CatalogProductsPage() {
                     onClick={() => navigate(`${obj.name.replaceAll(" ", "-").toLowerCase()}`)}
                   >
                     <div className="flex flex-col">
-                      <img src={obj.url_image} alt="" className="px-2 pt-2 w-full 2xl:h-[200px] object-fill" />
-                      <div className="flex items-center justify-between px-4 py-4 text-md 2xl:text-lg font-medium">
-                        <h4 className="text-gray-800">{obj.name}</h4>
+                      <img src={obj.url_image} alt="" className="px-2 pt-2 w-full 2xl:h-[200px] md:h-[165px] object-fill" />
+                      <div className="flex items-center justify-between px-4 py-4 text-sm 2xl:text-lg font-medium">
+                        <div>
+                          <h4 className="text-gray-800">{obj.name}</h4>
+                          <p className="text-gray-600 2xl:text-sm text-xs">Modelo: {obj.model.name}</p>
+                        </div>
                         <AnimatedButton
                           color="#ff8904"
                           colorHover="#f8741a"
                           content={<DollarSignIcon className="text-xl" />}
                           disabled={false}
-                          adicionalStyle="w-fit h-fit text py-1.5 px-2 text-white"
+                          adicionalStyle="w-fit h-fit text 2xl:py-2 2xl:px-2.5 py-1.5 px-2 text-white"
                           onClickFunction={() => window.open(WhatsAppLink(obj.name), "_blank")}
                         />
                       </div>

@@ -24,6 +24,27 @@ function WhatsAppLink(productName: string) {
   return whatsappLink;
 }
 
+export function formatDescription(text: string): string {
+  if (!text) return "";
+  if (!text.includes("•")) {
+    return text;
+  }
+  const rawParts = text
+    .split("•")
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0);
+  const title = rawParts.shift();
+  const items = rawParts;
+  return `
+    <div>
+      <div>${title}</div>
+      <ul class="list-disc ml-4 marker:text-black">
+        ${items.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
 export default function CatalogProductPage() {
   const { productTypeSlug, producerSlug, productSlug } = useParams();
   const productName = convertSlug(productSlug ?? "");
@@ -41,7 +62,7 @@ export default function CatalogProductPage() {
           <Navbar />
         </div>
         <div className="flex flex-col mt-5 mb-20 md:mb-0 h-full w-4/5 md:w-3/4">
-          <div className="flex gap-2 text-sm 2xl:text-base text-gray-800">
+          <div className="flex gap-2 text-sm md:text-xs 2xl:text-base text-gray-800">
             <span onClick={() => navigate("/")} className="cursor-pointer">
               Home
             </span>
@@ -84,23 +105,27 @@ export default function CatalogProductPage() {
                   <img
                     src={product?.url_image}
                     alt=""
-                    className="px-2 pt-2 w-full h-[300px] md:h-[400px] 2xl:h-[450px] object-fill border-1 rounded-xl border-gray-400"
+                    className="px-2 py-2 w-full h-[300px] md:h-[400px] 2xl:h-[450px] object-fill border-1 rounded-xl border-gray-400"
                   />
                 </div>
-                <div className="flex flex-col h-full w-full justify-between col-start-4 col-span-2 py-4 gap-10 md:gap-0">
-                  <div className="flex flex-col gap-6">
+                <div className="flex flex-col h-full w-full justify-between col-start-4 col-span-2 py-4 gap-7 md:gap-0">
+                  <div className="flex flex-col gap-4 2xl:gap-6">
                     <h3 className="text-2xl 2xl:text-4xl font-medium">{product?.name}</h3>
+
                     <p className="text-md 2xl:text-lg text-justify">
                       <span className="font-semibold">Fabricante:</span> {product?.producer.name}
                     </p>
+
                     {product?.model && (
                       <p>
                         <span className="font-semibold">Modelo:</span> {product?.model.name}
                       </p>
                     )}
-                    <p className="text-md 2xl:text-lg text-justify">
-                      <span className="font-semibold">Descrição:</span> {product?.description}
-                    </p>
+
+                    <div className="text-md 2xl:text-lg text-justify">
+                      <span className="font-semibold">Descrição:</span>
+                      <div className="text-sm" dangerouslySetInnerHTML={{ __html: formatDescription(product?.description ?? "") }} />
+                    </div>
                   </div>
                   <div>
                     <AnimatedButton

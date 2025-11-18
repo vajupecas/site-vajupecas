@@ -54,7 +54,7 @@ export default function ProductsPage() {
         <AdminNavbar />
         <div className="flex-1 justify-self-center flex flex-col gap-14 2xl:mt-20 lg:mt-15 mx-12 mb-12 items-center">
           <h2 className="w-full 2xl:text-5xl lg:text-4xl text-center text-orange-500 font-semibold">PRODUTOS</h2>
-          <div className="2xl:w-1/2 xl:w-4/6 w-5/6 h-full">
+          <div className="2xl:w-4/6 xl:w-5/7 w-7/8 h-full">
             <div className="flex justify-between">
               <div className="flex gap-8">
                 <AnimatedButton
@@ -138,6 +138,7 @@ export default function ProductsPage() {
                   setEditProductForm={setEditProductForm}
                   setProductRemove={setProductRemove}
                   setRemoveProductForm={setRemoveProductForm}
+                  loading={loading}
                 />
               </>
             )}

@@ -27,7 +27,7 @@ export default function MobileNavbar() {
   }
 
   return (
-    <div className={`sm:hidden h-fit w-full flex items-center flex-col bg-white ${open ? "" : "shadow-sm"}`}>
+    <div className={`sm:hidden h-fit w-full flex items-center flex-col bg-white ${open ? "" : "shadow-sm"} z-50`}>
       <div className="flex items-center justify-between w-full">
         <div className="mx-5">
           <NavLink to={"/"} className="block w-fit">

@@ -37,12 +37,18 @@ export default function EditProductForm({
   const [enableEdit, setEnableEdit] = useState(false);
 
   useEffect(() => {
-    if (productName !== product?.name || productDescription !== product?.description || productProducer !== product || file !== null) {
+    if (
+      productName !== product?.name ||
+      productDescription !== product?.description ||
+      productProducer?.name !== product?.producer.name ||
+      productModel !== String(product?.model_id) ||
+      file !== null
+    ) {
       setEnableEdit(true);
     } else {
       setEnableEdit(false);
     }
-  }, [productName, productDescription, productProducer?.id, file]);
+  }, [productName, productDescription, productProducer?.id, productModel, file]);
 
   function cancelEditProduct() {
     setEditProductForm(false);
@@ -135,10 +141,7 @@ export default function EditProductForm({
               }}
               value={productProducer?.id ?? ""}
             >
-              <option value="" selected>
-                - Selecionar -
-              </option>
-              (
+              <option value="">- Selecionar -</option>(
               {producers
                 .filter((obj) => obj.product_type_id == Number(productProductType?.id))
                 .map((obj) => (

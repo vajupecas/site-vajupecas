@@ -32,7 +32,7 @@ export default function CatalogProducersPage() {
         </div>
         <div className="flex flex-col mt-5 h-full w-4/5 md:w-3/4 items-center">
           <div className="w-full flex flex-col gap-3 md:gap-5">
-            <div className="flex gap-2 text-sm 2xl:text-base text-gray-800">
+            <div className="flex gap-2 text-sm md:text-xs 2xl:text-base text-gray-800">
               <span onClick={() => navigate("/")} className="cursor-pointer">
                 Home
               </span>

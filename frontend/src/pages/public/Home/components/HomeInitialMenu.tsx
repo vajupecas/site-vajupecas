@@ -74,11 +74,11 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                   >
                     <h3
                       className={`
-                        w-fit
+                        2xl:w-fit
+                        w-min
                         font-semibold
                         cursor-default
                         relative
-                        whitespace-nowrap
                         after:content-['']
                         after:absolute
                         after:left-0
@@ -94,7 +94,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                         }
                       `}
                     >
-                      {obj.name.toUpperCase()}
+                      {obj.name}
                     </h3>
                   </div>
                   {listToRender && (
@@ -120,7 +120,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                               const itemSlug = item.name.replaceAll(/\s+/g, "-").toLowerCase();
 
                               if (obj.has_producer) {
-                                navigate(`/catalogo/${objSlug}/${itemSlug}`);
+                                navigate(`/catalogo/${objSlug}/fabricantes/${itemSlug}/produtos`);
                               }
                             }}
                             whileHover={{
@@ -131,7 +131,7 @@ export default function HomeInitialMenu({ productTypes }: HomeInitialMenuProps) 
                               scale: 0.9,
                               transition: { duration: 0.2 },
                             }}
-                            className="cursor-pointer text-lg md:text-2xl w-fit"
+                            className="cursor-pointer text-md md:text-2xl w-fit"
                           >
                             <li>{item.name}</li>
                           </motion.button>

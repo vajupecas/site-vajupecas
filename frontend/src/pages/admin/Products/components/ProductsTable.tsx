@@ -8,9 +8,17 @@ interface ProductsTableProps {
   setEditProductForm: Function;
   setProductRemove: Function;
   setRemoveProductForm: Function;
+  loading: boolean;
 }
 
-export default function ProductsTable({ products, setProductEdit, setEditProductForm, setProductRemove, setRemoveProductForm }: ProductsTableProps) {
+export default function ProductsTable({
+  products,
+  setProductEdit,
+  setEditProductForm,
+  setProductRemove,
+  setRemoveProductForm,
+  loading,
+}: ProductsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const maxButtons = 3;
@@ -90,14 +98,19 @@ export default function ProductsTable({ products, setProductEdit, setEditProduct
                   {obj.description.slice(0, 10) + `${obj.description.length > 10 ? "..." : ""}`}
                 </td>
                 <td className="px-6 py-4  font-medium text-right">
-                  <button onClick={() => handleEditProductForm(obj)} className="cursor-pointer text-blue-600 hover:underline">
+                  <button
+                    disabled={loading}
+                    onClick={() => handleEditProductForm(obj)}
+                    className="cursor-pointer text-blue-600 disabled:text-blue-200 hover:underline"
+                  >
                     Editar
                   </button>
                 </td>
                 <td className="px-6 py-4 font-medium text-right">
                   <button
+                    disabled={loading}
                     onClick={() => handleRemoveProductForm(obj)}
-                    className="cursor-pointer rounded-lg bg-red-500 hover:bg-red-600 text-white px-4 py-2"
+                    className="cursor-pointer rounded-lg bg-red-500 hover:bg-red-600 disabled:bg-red-300 disabled:text-gray-200 text-white px-4 py-2"
                   >
                     Remover
                   </button>

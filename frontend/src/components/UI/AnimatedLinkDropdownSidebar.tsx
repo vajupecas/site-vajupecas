@@ -65,7 +65,7 @@ export function AnimatedLinkDropdownSidebar({
                       ? `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}`
                       : `/catalogo/${obj.name.replaceAll(/\s+/g, "-").toLowerCase()}/produtos`
                   }
-                  adicionalStyle="w-fit"
+                  adicionalStyle="w-min"
                 />
               </motion.li>
             ))}
