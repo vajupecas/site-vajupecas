@@ -66,7 +66,7 @@ export function useProductsPage() {
     productName: string,
     productDescription: string,
     file: File | null = null,
-    productProductTupe: string,
+    productProductType: string,
     productProducer: string | null = null,
     model: string | null = null
   ) => {
@@ -76,7 +76,7 @@ export function useProductsPage() {
     const data: any = {
       name: productName,
       description: productDescription,
-      product_type_id: Number(productProductTupe),
+      product_type_id: Number(productProductType),
     };
 
     if (productProducer !== "") {

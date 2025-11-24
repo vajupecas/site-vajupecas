@@ -31,7 +31,7 @@ export default function EditProductForm({
   const [productName, setProductName] = useState(product?.name);
   const [productDescription, setProductDescription] = useState(product?.description);
   const [productProducer, setProductProducer] = useState<ProducerSummaryDTO | null>(product?.producer ?? null);
-  const [productModel, setProductModel] = useState(String(product?.model_id));
+  const [productModel, setProductModel] = useState(product?.model_id ?? "");
   const [productProductType, setProductProductType] = useState<ProductTypeSummaryDTO | null>(product?.product_type ?? null);
   const [file, setFile] = useState<File | null>(null);
   const [enableEdit, setEnableEdit] = useState(false);
@@ -48,7 +48,7 @@ export default function EditProductForm({
     } else {
       setEnableEdit(false);
     }
-  }, [productName, productDescription, productProducer?.id, productModel, file]);
+  }, [productName, productDescription, productProductType?.id, productProducer?.id, productModel, file]);
 
   function cancelEditProduct() {
     setEditProductForm(false);
@@ -56,7 +56,7 @@ export default function EditProductForm({
   }
 
   async function handleEditProduct() {
-    await editProduct(product?.id, productName, productDescription, file, productProducer);
+    await editProduct(product?.id, productName, productDescription, file, productProductType?.id, productProducer?.id, productModel);
     setProductEdit(null);
     setEditProductForm(false);
     await refreshProducts();
