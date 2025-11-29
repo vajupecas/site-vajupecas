@@ -80,8 +80,14 @@ export function Footer() {
         </div>
       </div>
       <div className="w-full py-5 border-t-1 border-t-neutral-600">
-        <div className="justify-self-center text-center">
+        <div className="justify-self-center text-center flex flex-col">
           <span className="text-neutral-700 text-xs md:text-xs 2xl:text-base">&copy; Copyright Vaju Pecas de Bombas e Betoneiras Ltda {year}</span>
+          <span className="text-neutral-700 text-xs">
+            Desenvolvido por{" "}
+            <a href="https://www.linkedin.com/in/joao-victor-ramos-kern/" target="_blank">
+              João Kern
+            </a>
+          </span>
         </div>
       </div>
     </div>
