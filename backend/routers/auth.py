@@ -16,7 +16,7 @@ async def login(data: AdminLogin, response: Response, session: Annotated[AsyncSe
     if not user or not verify_password(data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
     token = create_access_token({"sub": str(user.id)}, timedelta(minutes=300))
-    response.set_cookie(key="user_session", value=token, httponly=True, secure=False, samesite="Lax", path="/")
+    response.set_cookie(key="user_session", value=token, httponly=True, secure=True, samesite="none", path="/")
     return {"message": "Login bem-sucedido", "user_id": user.id}
 
 @router.delete("/auth/logout")

@@ -42,7 +42,7 @@ export default function CatalogProductsPage() {
 
   return (
     <div className="bg-gray-50 h-full w-full">
-      <div className="min-h-screen w-screen items-center flex flex-col">
+      <div className="min-h-screen w-screen items-center flex flex-col mb-20">
         <div className="w-full">
           <TopBar />
           <MobileNavbar />
@@ -96,7 +96,7 @@ export default function CatalogProductsPage() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={products ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="divide-y absolute mt-11 w-fit"
+                    className="divide-y absolute mt-11 w-fit z-100"
                   >
                     <ul className="bg-gray-700 rounded-lg text-white px-4 py-3 space-y-2 max-h-55 overflow-y-auto">
                       {models.map((obj) => (
@@ -140,14 +140,20 @@ export default function CatalogProductsPage() {
                   <motion.div
                     className="bg-white cursor-pointer outline-1 outline-gray-300 w-full h-fit rounded-lg"
                     whileHover={{ scale: 1.025, transition: { duration: 0.2 } }}
-                    onClick={() => navigate(`${obj.name.replaceAll(" ", "-").toLowerCase()}`)}
+                    onClick={() => {
+                      if (obj.model) {
+                        navigate(`${obj.name.replaceAll(" ", "-").toLowerCase()}/${obj.model.name.replaceAll(" ", "-").toLowerCase()}`);
+                      } else {
+                        navigate(`${obj.name.replaceAll(" ", "-").toLowerCase()}`);
+                      }
+                    }}
                   >
                     <div className="flex flex-col">
                       <img src={obj.url_image} alt="" className="px-2 pt-2 w-full 2xl:h-[200px] md:h-[165px] object-fill" />
                       <div className="flex items-center justify-between px-4 py-4 text-sm 2xl:text-lg font-medium">
                         <div>
                           <h4 className="text-gray-800">{obj.name}</h4>
-                          <p className="text-gray-600 2xl:text-sm text-xs">Modelo: {obj.model.name}</p>
+                          {obj.model && <p className="text-gray-600 2xl:text-sm text-xs">Modelo: {obj.model.name}</p>}
                         </div>
                         <AnimatedButton
                           color="#ff8904"

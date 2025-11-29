@@ -36,8 +36,8 @@ export const getProductsById = async (productId: number): Promise<Product> => {
   return response.data;
 };
 
-export const getProductsBySlug = async (productSlug: string): Promise<Product> => {
-  const response = await API.get(`/products/slug/${productSlug}`);
+export const getProductsBySlug = async (productSlug: string, modelSlug: string): Promise<Product> => {
+  const response = await API.get(`/products/slug/${productSlug}/${modelSlug}`);
   return response.data;
 };
 

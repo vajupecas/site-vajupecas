@@ -46,12 +46,12 @@ export function formatDescription(text: string): string {
 }
 
 export default function CatalogProductPage() {
-  const { productTypeSlug, producerSlug, productSlug } = useParams();
+  const { productTypeSlug, producerSlug, productSlug, modelSlug } = useParams();
   const productName = convertSlug(productSlug ?? "");
   const activeName = convertSlug(producerSlug ?? "Produtos");
   const productTypeName = convertSlug(productTypeSlug ?? "");
   const navigate = useNavigate();
-  const { product, loading } = useCatalogProductPage(productSlug ?? "");
+  const { product, loading } = useCatalogProductPage(productSlug ?? "", modelSlug ?? "");
 
   return (
     <div className="bg-gray-50 h-full w-full overflow-hidden">

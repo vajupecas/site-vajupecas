@@ -72,11 +72,11 @@ const router = createBrowserRouter([
         element: <CatalogProductsPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug/produtos/:productSlug`,
+        path: `/catalogo/:productTypeSlug/fabricantes/:producerSlug/produtos/:productSlug/:modelSlug`,
         element: <CatalogProductPage />,
       },
       {
-        path: `/catalogo/:productTypeSlug/produtos/:productSlug`,
+        path: `/catalogo/:productTypeSlug/produtos/:productSlug/:modelSlug`,
         element: <CatalogProductPage />,
       },
       {
