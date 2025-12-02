@@ -50,7 +50,7 @@ export interface ProductUpdateDTO {
   name?: string;
   description?: string;
   url_image?: string;
-  product_type_id?: number;
-  producer_id?: number;
+  product_type_id?: number | null;
+  producer_id?: number | null;
   model_id?: number;
 }

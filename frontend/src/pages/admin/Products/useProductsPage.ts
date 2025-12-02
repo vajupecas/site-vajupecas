@@ -79,12 +79,16 @@ export function useProductsPage() {
       product_type_id: Number(productProductType),
     };
 
-    if (productProducer !== "") {
+    if (productProducer !== "" && productProducer !== null) {
       data.producer_id = Number(productProducer);
+    } else {
+      data.producer_id = null;
     }
 
-    if (model !== "") {
+    if (model !== "" && model !== null) {
       data.model_id = Number(model);
+    } else {
+      data.model_id = null;
     }
 
     if (url_image !== "") {

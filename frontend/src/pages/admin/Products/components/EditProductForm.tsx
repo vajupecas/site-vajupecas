@@ -113,6 +113,8 @@ export default function EditProductForm({
               onChange={(e) => {
                 const selected = productTypes.find((obj) => obj.id === Number(e.target.value)) || null;
                 setProductProductType(selected);
+                setProductProducer(null);
+                setProductModel("");
               }}
               value={productProductType?.id ?? ""}
             >
@@ -164,9 +166,7 @@ export default function EditProductForm({
               onChange={(e) => setProductModel(e.target.value)}
               value={productModel}
             >
-              <option value="" selected>
-                - Selecionar -
-              </option>
+              <option value="">- Selecionar -</option>
               {models
                 .filter((obj) => obj.producer_id == Number(productProducer?.id))
                 .map((obj) => (
