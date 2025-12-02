@@ -132,7 +132,7 @@ export default function ProductsTable({
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`2xl:px-3 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs rounded ${
+            className={`2xl:px-3 select-none 2xl:py-1 px-2.5 py-0.5 2xl:text-base text-xs rounded ${
               currentPage === i ? "bg-orange-500 text-white" : "bg-gray-200"
             } cursor-pointer`}
           >

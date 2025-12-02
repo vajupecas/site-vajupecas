@@ -50,11 +50,11 @@ export function useProductsPage() {
       product_type_id: Number(productProductType),
     };
 
-    if (productProducer !== "") {
+    if (productProducer !== "" && productProducer !== null) {
       data.producer_id = Number(productProducer);
     }
 
-    if (model !== "") {
+    if (model !== "" && model !== null) {
       data.model_id = Number(model);
     }
 
