@@ -1,12 +1,17 @@
 import { useNavigate, useParams } from "react-router";
 import { useCatalogProductPage } from "./useCatalogProductPage";
-import DollarSignIcon from "../../../../assets/icons/dollar-sign.svg?react";
+import CartIcon from "../../../../assets/icons/cart.svg?react";
 import TopBar from "../../../../components/Layout/TobBar";
 import Navbar from "../../../../components/Layout/Navbar";
 import Loader from "../../../../components/Layout/Loader";
 import { AnimatedButton } from "../../../../components/UI/AnimatedButton";
+import { addToCart } from "../../../../features/cart/cart.service";
 import MobileNavbar from "../../../../components/Layout/MobileNavbar";
 import { Footer } from "../../../../components/Layout/Footer";
+import { ProductAddedPopup } from "../../../../components/Layout/ProductAddedPopUp";
+import type { ProductResponseDTO } from "../../../../features/product/product.model";
+import { useState } from "react";
+
 function convertSlug(slug: string) {
   return slug
     .toLowerCase()
@@ -14,14 +19,6 @@ function convertSlug(slug: string) {
     .split(" ")
     .map((word: string) => (word != "de" ? word.charAt(0).toUpperCase() + word.slice(1) : word))
     .join(" ");
-}
-
-function WhatsAppLink(productName: string) {
-  const phone = "5548992067057";
-  const message = `Olá! Gostaria de ter um orçamento do ${productName}.`;
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
-  return whatsappLink;
 }
 
 export function formatDescription(text: string): string {
@@ -52,6 +49,15 @@ export default function CatalogProductPage() {
   const productTypeName = convertSlug(productTypeSlug ?? "");
   const navigate = useNavigate();
   const { product, loading } = useCatalogProductPage(productSlug ?? "", modelSlug ?? "");
+
+  const [showPopUp, setShowPopUp] = useState(false);
+
+  function handleAddToCart(product: ProductResponseDTO | null) {
+    if (product) {
+      addToCart(product);
+      setShowPopUp(true);
+    }
+  }
 
   return (
     <div className="bg-gray-50 h-full w-full overflow-hidden">
@@ -133,13 +139,13 @@ export default function CatalogProductPage() {
                       colorHover="#f8741a"
                       content={
                         <div className="flex gap-2 items-center">
-                          <p className="text-lg 2xl:text-xl">Solicitar Orçamento</p>
-                          <DollarSignIcon className="text-xl 2xl:text-3xl" />
+                          <p className="text-lg 2xl:text-xl">Adicionar ao Carrinho</p>
+                          <CartIcon className="text-xl 2xl:text-3xl" />
                         </div>
                       }
                       disabled={false}
                       adicionalStyle="w-fit h-fit p-3 text-white"
-                      onClickFunction={() => window.open(WhatsAppLink(productName), "_blank")}
+                      onClickFunction={() => handleAddToCart(product ?? null)}
                     />
                   </div>
                 </div>
@@ -147,6 +153,7 @@ export default function CatalogProductPage() {
             </>
           )}
         </div>
+        <ProductAddedPopup open={showPopUp} onClose={() => setShowPopUp(false)} />
       </div>
       <Footer />
     </div>

@@ -10,6 +10,7 @@ import AboutIcon from "../../assets/icons/people.svg?react";
 import CatalogIcon from "../../assets/icons/truck.svg?react";
 import ContactIcon from "../../assets/icons/telephone.svg?react";
 import ToolIcon from "../../assets/icons/tool.svg?react";
+import CartIcon from "../../assets/icons/cart.svg?react";
 
 export default function MobileNavbar() {
   const [productTypes, setProductTypes] = useState<ProductTypeResponseDTO[]>([]);
@@ -93,6 +94,17 @@ export default function MobileNavbar() {
               <div className="flex w-full justify-self-center items-center gap-2">
                 <ContactIcon />
                 Contato
+              </div>
+            }
+            color="#ff8904"
+            adicionalStyle="transition-all duration-300 justify-center"
+          />
+          <NavbarLink
+            to="/carrinho"
+            content={
+              <div className="flex w-full justify-self-center items-center gap-2">
+                <CartIcon />
+                Carrinho
               </div>
             }
             color="#ff8904"

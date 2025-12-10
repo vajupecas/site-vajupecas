@@ -25,6 +25,7 @@ import ServicesPage from "./pages/public/Services/ServicesPage.tsx";
 import ModelsPage from "./pages/admin/Models/ModelPage.tsx";
 import ClientsPage from "./pages/admin/Clients/ClientsPage.tsx";
 import HydraulicHosePage from "./pages/public/HydraulicHose/HydraulicHosePage.tsx";
+import CartPage from "./pages/public/Cart/CartPage.tsx";
 
 const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || "/admin";
 
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/contato",
         element: <ContactPage />,
+      },
+      {
+        path: "/carrinho",
+        element: <CartPage />,
       },
       { path: `/${ADMIN_PATH}/login`, element: <LoginPage /> },
       {

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
 import { useCatalogProductsPage } from "./useCatalogProductsPage";
-import DollarSignIcon from "../../../../assets/icons/dollar-sign.svg?react";
+import CartIcon from "../../../../assets/icons/cart.svg?react";
 import TopBar from "../../../../components/Layout/TobBar";
 import Navbar from "../../../../components/Layout/Navbar";
 import Loader from "../../../../components/Layout/Loader";
@@ -10,6 +10,9 @@ import { AnimatedButton } from "../../../../components/UI/AnimatedButton";
 import MobileNavbar from "../../../../components/Layout/MobileNavbar";
 import { Footer } from "../../../../components/Layout/Footer";
 import { useState } from "react";
+import { addToCart } from "../../../../features/cart/cart.service";
+import type { ProductResponseDTO } from "../../../../features/product/product.model";
+import { ProductAddedPopup } from "../../../../components/Layout/ProductAddedPopUp";
 
 function convertSlug(slug: string) {
   return slug
@@ -19,15 +22,6 @@ function convertSlug(slug: string) {
     .map((word: string) => (word != "de" ? word.charAt(0).toUpperCase() + word.slice(1) : word))
     .join(" ");
 }
-
-function WhatsAppLink(productName: string) {
-  const phone = "5548992067057";
-  const message = `Olá! Gostaria de ter um orçamento do ${productName}.`;
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
-  return whatsappLink;
-}
-
 export default function CatalogProductsPage() {
   const [filterList, setFilterList] = useState(false);
   const { productTypeSlug, producerSlug } = useParams();
@@ -40,6 +34,13 @@ export default function CatalogProductsPage() {
     producerSlug: producerSlug,
   });
 
+  const [showPopUp, setShowPopUp] = useState(false);
+
+  function handleAddToCart(product: ProductResponseDTO) {
+    addToCart(product);
+    setShowPopUp(true);
+  }
+
   return (
     <div className="bg-gray-50 h-full w-full">
       <div className="min-h-screen w-screen items-center flex flex-col mb-20">
@@ -48,7 +49,7 @@ export default function CatalogProductsPage() {
           <MobileNavbar />
           <Navbar />
         </div>
-        <div className="flex flex-col mt-5 mb-20 md:mb-0 h-full w-4/5 md:w-3/4">
+        <div className="flex flex-col mt-5 mb-20 md:mb-0 h-full w-4/5 md:w-4/5">
           <div className="flex flex-col gap-3 md:gap-5">
             <div className="flex gap-2 text-sm md:text-xs 2xl:text-base text-gray-800">
               <span onClick={() => navigate("/")} className="cursor-pointer">
@@ -158,10 +159,13 @@ export default function CatalogProductsPage() {
                         <AnimatedButton
                           color="#ff8904"
                           colorHover="#f8741a"
-                          content={<DollarSignIcon className="text-xl" />}
+                          content={<CartIcon className="text-xl" />}
                           disabled={false}
-                          adicionalStyle="w-fit h-fit text 2xl:py-2 2xl:px-2.5 py-1.5 px-2 text-white"
-                          onClickFunction={() => window.open(WhatsAppLink(obj.name), "_blank")}
+                          adicionalStyle="w-fit h-fit text 2xl:py-2 2xl:px-2.5 py-1.5 px-2 text-white z-30"
+                          onClickFunction={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(obj);
+                          }}
                         />
                       </div>
                     </div>
@@ -171,6 +175,7 @@ export default function CatalogProductsPage() {
             </>
           )}
         </div>
+        <ProductAddedPopup open={showPopUp} onClose={() => setShowPopUp(false)} />
       </div>
       <Footer />
     </div>

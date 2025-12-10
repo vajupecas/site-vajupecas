@@ -55,6 +55,15 @@ export function useCatalogProductsPage({ productTypeSlug, producerSlug }: UseCat
     setProducts(await getProductsByModel(modelId));
   };
 
+  function addToCart(produto: ProductResponseDTO) {
+    const valor = localStorage.getItem("cart") ?? "[]";
+    const cart = JSON.parse(valor);
+
+    cart.push(produto);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
   const filteredProducts = filterSearch ? products.filter((obj) => obj.name.toLowerCase().includes(filterSearch.toLowerCase())) : products;
 
   return {
@@ -65,5 +74,6 @@ export function useCatalogProductsPage({ productTypeSlug, producerSlug }: UseCat
     filterSearch,
     filterByModel,
     setFilterSearch,
+    addToCart,
   };
 }

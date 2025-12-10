@@ -7,6 +7,7 @@ import { useTexts } from "../../../contexts/TextContext";
 import Navbar from "../../../components/Layout/Navbar";
 import Counter from "../../../components/UI/Counter";
 import { motion } from "framer-motion";
+import { ScrollAnimation } from "../../../components/UI/ScrollAnimation";
 
 export default function AboutUsPage() {
   const { findText, loadingTexts } = useTexts();
@@ -34,46 +35,54 @@ export default function AboutUsPage() {
                 </div>
                 <div className="flex justify-center w-full">
                   <div className="grid p-3 grid-cols-2 grid-rows-2 gap-2 md:gap-10">
-                    <motion.div
-                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
-                      className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
-                    >
-                      <span className="text-2xl md:text-3xl font-bold text-orange-500">
-                        <Counter target={year - 2020}></Counter>
-                        <sup className="text-gray-800"> +</sup>
-                      </span>
-                      <span className="text-center text-sm font-medium">Anos de Atividade</span>
-                    </motion.div>
-                    <motion.div
-                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
-                      className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
-                    >
-                      <span className="text-2xl md:text-3xl font-bold text-orange-500">
-                        <Counter target={Number(findText("Clientes Atendidos"))}></Counter>
-                        <sup className="text-gray-800"> +</sup>
-                      </span>
-                      <span className="text-sm text-center font-medium">Clientes Atendidos</span>
-                    </motion.div>
-                    <motion.div
-                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
-                      className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
-                    >
-                      <span className="text-2xl md:text-3xl font-bold text-orange-500">
-                        <Counter target={Number(findText("Quantidade Produtos"))}></Counter>
-                      </span>
-                      <span className="text-sm font-medium">Produtos</span>
-                    </motion.div>
-                    <motion.div
-                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
-                      className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
-                    >
-                      <span className="text-2xl md:text-3xl font-bold text-orange-500">São José</span>
-                      <span className="text-sm font-medium">Santa Catarina</span>
-                    </motion.div>
+                    <ScrollAnimation from="x">
+                      <motion.div
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
+                        className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
+                      >
+                        <span className="text-2xl md:text-3xl font-bold text-orange-500">
+                          <Counter target={year - 2020}></Counter>
+                          <sup className="text-gray-800"> +</sup>
+                        </span>
+                        <span className="text-center text-sm font-medium">Anos de Atividade</span>
+                      </motion.div>
+                    </ScrollAnimation>
+                    <ScrollAnimation from="x">
+                      <motion.div
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
+                        className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
+                      >
+                        <span className="text-2xl md:text-3xl font-bold text-orange-500">
+                          <Counter target={Number(findText("Clientes Atendidos"))}></Counter>
+                          <sup className="text-gray-800"> +</sup>
+                        </span>
+                        <span className="text-sm text-center font-medium">Clientes Atendidos</span>
+                      </motion.div>
+                    </ScrollAnimation>
+                    <ScrollAnimation from="x">
+                      <motion.div
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
+                        className="flex flex-col w-full justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
+                      >
+                        <span className="text-2xl md:text-3xl font-bold text-orange-500">
+                          <Counter target={Number(findText("Quantidade Produtos"))}></Counter>
+                        </span>
+                        <span className="text-sm font-medium">Produtos</span>
+                      </motion.div>
+                    </ScrollAnimation>
+                    <ScrollAnimation from="x">
+                      <motion.div
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.9, transition: { duration: 0.2 } }}
+                        className="flex flex-col justify-center items-center px-4 md:px-10 border-1 border-gray-300 rounded-2xl"
+                      >
+                        <span className="text-2xl md:text-3xl font-bold text-orange-500">São José</span>
+                        <span className="text-sm font-medium">Santa Catarina</span>
+                      </motion.div>
+                    </ScrollAnimation>
                   </div>
                 </div>
               </div>

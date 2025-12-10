@@ -64,7 +64,7 @@ export default function EditProductForm({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black opacity-50" onClick={() => cancelEditProduct()}></div>
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm " onClick={() => cancelEditProduct()}></div>
       <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute 2xl:w-1/4 lg:top-0 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">EDITAR PRODUTO</h3>
         <div className="flex flex-col gap-3">

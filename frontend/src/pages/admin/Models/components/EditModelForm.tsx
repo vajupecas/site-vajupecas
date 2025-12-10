@@ -41,7 +41,7 @@ export default function EditModelForm({ model, setEditModelForm, editModel, setM
 
   return (
     <>
-      <div className="fixed inset-0 bg-black opacity-50" onClick={() => cancelEditModel()}></div>
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm " onClick={() => cancelEditModel()}></div>
       <div className="z-50 flex flex-col gap-5 px-16 pb-3 absolute 2xl:w-1/4 w-1/3 bg-gray-200 rounded-lg shadow-lg">
         <h3 className="text-center px-4 py-2 text-2xl bg-orange-500 w-fit self-center rounded-b-lg text-white">EDITAR MODELO</h3>
         <div className="flex flex-col gap-3">

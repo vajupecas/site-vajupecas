@@ -3,11 +3,11 @@ import type { ReactNode } from "react";
 
 interface AnimatedButtonProps {
   content: ReactNode;
-  onClickFunction: (event?: React.MouseEvent<HTMLButtonElement>) => void;
+  onClickFunction?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   color: string;
   colorHover: string;
   colorDisabled?: string;
-  disabled: boolean;
+  disabled?: boolean;
   adicionalStyle?: string;
 }
 
@@ -17,7 +17,7 @@ export function AnimatedButton({
   color,
   colorHover,
   colorDisabled = "transparent",
-  disabled,
+  disabled = false,
   adicionalStyle,
 }: AnimatedButtonProps) {
   return (

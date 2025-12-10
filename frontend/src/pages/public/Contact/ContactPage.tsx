@@ -79,15 +79,15 @@ export default function ContactPage() {
                 <div className="flex flex-col items-center gap-8 text-3xl">
                   <span className="w-full text-left text-gray-800 font-bold">Siga-nos</span>
                   <div className="flex gap-8 w-full text-2xl">
-                    <AnimatedLink color="#1e2939" content={<InstagramIcon />} to="https://www.instagram.com/vaju_pecas/" target="blank" />
+                    <AnimatedLink color="#ef5e00" content={<InstagramIcon />} to="https://www.instagram.com/vaju_pecas/" target="blank" />
                     <AnimatedLink
-                      color="#1e2939"
+                      color="#ef5e00"
                       content={<FacebookIcon />}
                       to="https://www.facebook.com/p/Vaju-Pe%C3%A7as-de-Bombas-e-Betoneiras-100037942788609/"
                       target="blank"
                     />
                     <AnimatedLink
-                      color="#1e2939"
+                      color="#ef5e00"
                       content={<LinkedinIcon />}
                       to="https://www.linkedin.com/in/valdecir-geovani-arend-7598b760/"
                       target="blank"
