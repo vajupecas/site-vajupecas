@@ -37,11 +37,12 @@ export default function EditProductForm({
   const [enableEdit, setEnableEdit] = useState(false);
 
   useEffect(() => {
+    console.log(productModel);
     if (
       productName !== product?.name ||
       productDescription !== product?.description ||
-      productProducer?.name !== product?.producer.name ||
-      productModel !== String(product?.model_id) ||
+      productProducer?.name !== product?.producer?.name ||
+      productModel !== (product?.model_id ? String(product?.model_id) : "") ||
       file !== null
     ) {
       setEnableEdit(true);
@@ -157,7 +158,7 @@ export default function EditProductForm({
               <p>Modelo</p>
               <AnimatedResetButton
                 content={<RotateCcw size={14} color="black" />}
-                onClickFunction={() => setProductModel(String(product?.model_id))}
+                onClickFunction={() => setProductModel(product?.model_id ? String(product?.model_id) : "")}
               />
             </div>
             <select
