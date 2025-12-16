@@ -75,13 +75,9 @@ export default function CatalogProductPage() {
             <span className="text-orange-400 font-medium cursor-default">/</span>
             <span
               onClick={() => {
-                let path = `/catalogo/${productTypeSlug}`;
-                if (producerSlug) {
-                  path += `/fabricantes`;
-                }
-                navigate(path);
+                if (producerSlug) navigate(`/catalogo/${productTypeSlug}/fabricantes`);
               }}
-              className="cursor-pointer"
+              className={producerSlug ? "cursor-pointer" : "cursor-default"}
             >
               {productTypeName}
             </span>
@@ -91,6 +87,8 @@ export default function CatalogProductPage() {
                 let path = `/catalogo/${productTypeSlug}`;
                 if (producerSlug) {
                   path += `/fabricantes/${producerSlug}/produtos`;
+                } else {
+                  path += `/produtos`;
                 }
                 navigate(path);
               }}
@@ -118,9 +116,11 @@ export default function CatalogProductPage() {
                   <div className="flex flex-col gap-4 2xl:gap-6">
                     <h3 className="text-2xl 2xl:text-4xl font-medium">{product?.name}</h3>
 
-                    <p className="text-md 2xl:text-lg text-justify">
-                      <span className="font-semibold">Fabricante:</span> {product?.producer.name}
-                    </p>
+                    {product?.producer && (
+                      <p className="text-md 2xl:text-lg text-justify">
+                        <span className="font-semibold">Fabricante:</span> {product?.producer.name}
+                      </p>
+                    )}
 
                     {product?.model && (
                       <p>

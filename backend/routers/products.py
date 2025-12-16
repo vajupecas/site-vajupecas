@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException
 from typing import Annotated, List, Optional
 from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -59,14 +59,12 @@ async def get_product_by_id(product_id: int, session: Annotated[AsyncSession, De
 
     return product
 
-@router.get("/products/slug/{product_slug}/{model_slug}", response_model=ProductResponse)
-async def get_product_by_slug(product_slug: str, model_slug: str, session: Annotated[AsyncSession, Depends(get_session)]):
+@router.get("/products/slug/{product_slug}", response_model=ProductResponse)
+async def get_product_by_slug(product_slug: str, session: Annotated[AsyncSession, Depends(get_session)],  model_slug: str | None = None):
     product_name = product_slug.replace("-", " ").lower()
-    model_name = model_slug.replace("-", " ").lower()
-
+    
     base_query = (
         select(Product)
-        .join(Product.model)
         .options(
             selectinload(Product.producer),
             selectinload(Product.model),
@@ -75,7 +73,16 @@ async def get_product_by_slug(product_slug: str, model_slug: str, session: Annot
     )
 
     if model_slug:
-        statement = base_query.where(and_(func.lower(Product.name) == product_name, func.lower(Model.name) == model_name,)
+        model_name = model_slug.replace("-", " ").lower()
+        statement = (
+            base_query
+            .join(Product.model)
+            .where(
+                and_(
+                    func.lower(Product.name) == product_name,
+                    func.lower(Model.name) == model_name,
+                )
+            )
         )
     else:
         statement = base_query.where(func.lower(Product.name) == product_name)

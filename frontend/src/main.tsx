@@ -85,6 +85,10 @@ const router = createBrowserRouter([
         element: <CatalogProductPage />,
       },
       {
+        path: `/catalogo/:productTypeSlug/produtos/:productSlug`,
+        element: <CatalogProductPage />,
+      },
+      {
         path: `/${ADMIN_PATH}`,
         element: (
           <PrivateRoute>

@@ -60,7 +60,7 @@ export default function CatalogProductsPage() {
                 onClick={() => {
                   if (producerSlug) navigate(`/catalogo/${productTypeSlug}/fabricantes`);
                 }}
-                className={producerSlug ? "cursor-pointer" : ""}
+                className={producerSlug ? "cursor-pointer" : "cursor-default"}
               >
                 {productTypeName}
               </span>

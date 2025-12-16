@@ -15,15 +15,6 @@ export function useCatalogProductPage(productSlug: string, modelSlug: string) {
     fetchData();
   }, [productSlug, modelSlug]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setProduct(await getProductsBySlug(productSlug, modelSlug));
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
-
   return {
     product,
     loading,

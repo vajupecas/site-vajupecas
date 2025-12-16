@@ -14,7 +14,7 @@ ssl_context = ssl.create_default_context()
 engine = create_async_engine(
     DATABASE_URL,
     connect_args={"ssl": ssl_context},
-    echo=True,
+    echo=False,
     pool_size=20,
     max_overflow=10,
     pool_recycle=1800,

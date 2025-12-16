@@ -1,6 +1,6 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from routers import model, products, service, slider, text, admin, auth, producer, product_type, media, client
 from database.db import init_db
 from contextlib import asynccontextmanager
@@ -39,3 +39,11 @@ app.include_router(auth.router)
 app.include_router(media.router)
 app.include_router(service.router)
 app.include_router(slider.router)
+
+if __name__ == "__main__":
+    uvicorn.run(
+        app,
+        host="127.0.0.1",
+        port=8000,
+        reload=True
+    )
